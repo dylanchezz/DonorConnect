@@ -1,16 +1,17 @@
-// server.js
+// server.js (ES Module)
 
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-require('dotenv').config(); // Load environment variables
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 
-// Import route modules
-const authRoutes = require('DonorConnect\authentication.js');
-const requestRoutes = require('DonorConnect\requests.js');
-const responseRoutes = require('DonorConnect\responses.js');
+// Route imports (use relative paths with forward slashes)
+import authRoutes from './authentication.js';
+import requestRoutes from './requests.js';
+import responseRoutes from './responses.js';
 
-// Initialize express app
+dotenv.config();
+
 const app = express();
 
 // Middleware
@@ -18,17 +19,17 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // API Routes
-app.use('/api/auth', authRoutes);         // Signup & login
-app.use('/api/requests', requestRoutes);  // Blood requests by patients
-app.use('/api/responses', responseRoutes); // Donor responses to requests
+app.use('/api/auth', authRoutes);         // Patient/Donor/Admin auth
+app.use('/api/requests', requestRoutes);  // Patient submits blood requests
+app.use('/api/responses', responseRoutes); // Donor responds to requests
 
-// Base route
+// Home route
 app.get('/', (req, res) => {
-  res.send('Welcome to the Blood Donation Request System API');
+  res.send('Blood Donation Request System API is running');
 });
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(` Server is running at http://localhost: `);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
