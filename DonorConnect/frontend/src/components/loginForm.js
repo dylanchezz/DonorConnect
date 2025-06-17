@@ -1,7 +1,7 @@
 // src/components/LoginForm.js
 import React, { useState } from 'react';
 import axios from '../api/axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './FormStyles.css';
 
 const LoginForm = () => {
@@ -12,6 +12,7 @@ const LoginForm = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm(prev => ({
@@ -29,7 +30,15 @@ const LoginForm = () => {
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       setMessage(`Welcome ${user.name} (${user.role})`);
-      // redirect or navigate to dashboard if needed
+
+      // Redirect based on role
+      if (user.role === 'Patient') {
+        navigate('/patient-dashboard');
+      } else if (user.role === 'Donor') {
+        navigate('/donor-dashboard');
+      } else if (user.role === 'Admin') {
+        navigate('/admin-dashboard');
+      }
     } catch (err) {
       setMessage(err.response?.data?.error || 'Login failed');
     }

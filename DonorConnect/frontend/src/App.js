@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignupForm from './components/SignUp_Form';
 import LoginForm from './components/loginForm';
+import PatientDashboard from './components/PatientDashboard'; // <-- Add this
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/patient-dashboard" element={<PatientDashboard />} />
         </Routes>
       </div>
     </Router>
