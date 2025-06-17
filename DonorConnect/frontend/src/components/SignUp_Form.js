@@ -1,7 +1,9 @@
 // src/components/SignupForm.js
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import './Form.css';
 
 const SignupForm = () => {
   const [form, setForm] = useState({
@@ -13,6 +15,8 @@ const SignupForm = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setForm(prev => ({
@@ -26,16 +30,19 @@ const SignupForm = () => {
     setMessage('');
 
     try {
-      const res = await axios.post('/auth/register', form);
-      setMessage(res.data.message || 'Registration successful!');
-      setForm({ name: '', email: '', phone: '', password: '', role: 'Patient' });
+      await axios.post('/auth/register', form);
+      setMessage('Registration successful!');
+      // Redirect to dashboard based on role
+      if (form.role === 'Patient') navigate('/patient-dashboard');
+      else if (form.role === 'Donor') navigate('/donor-dashboard');
+      else if (form.role === 'Admin') navigate('/admin-dashboard');
     } catch (err) {
-      setMessage(err.response?.data?.error || 'Registration failed.');
+      setMessage(err.response?.data?.error || 'Failed to register');
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <div className="form-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
@@ -49,7 +56,7 @@ const SignupForm = () => {
         </select>
         <button type="submit">Register</button>
       </form>
-      {message && <p style={{ marginTop: '1rem', color: 'green' }}>{message}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
 };
