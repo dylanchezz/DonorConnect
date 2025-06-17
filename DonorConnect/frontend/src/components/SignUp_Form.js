@@ -1,7 +1,8 @@
-// src/components/SignupForm.js
-
 import React, { useState } from 'react';
 import axios from '../api/axios';
+import { Link } from 'react-router-dom';
+import './FormStyles.css';
+
 
 const SignupForm = () => {
   const [form, setForm] = useState({
@@ -35,7 +36,8 @@ const SignupForm = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <div className="form-container">
+
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
@@ -50,9 +52,11 @@ const SignupForm = () => {
         <button type="submit">Register</button>
       </form>
       {message && <p style={{ marginTop: '1rem', color: 'green' }}>{message}</p>}
+      <p className="link-note">
+        Already have an account? <Link to="/login">Log in here</Link>
+      </p>
     </div>
   );
 };
 
 export default SignupForm;
-

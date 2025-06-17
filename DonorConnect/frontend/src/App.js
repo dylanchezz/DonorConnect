@@ -1,14 +1,21 @@
+// src/App.js
 import React from 'react';
-import SignupForm from './components/SignUp_Form.js';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SignupForm from './components/SignUp_Form';
+import LoginForm from './components/loginForm';
 
 function App() {
-    return (
+  return (
+    <Router>
       <div className="App">
         <h1>BloodConnect</h1>
-        <SignupForm />
+        <Routes>
+          <Route path="/" element={<SignupForm />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
       </div>
-    );
-  }
-  
+    </Router>
+  );
+}
+
 export default App;
