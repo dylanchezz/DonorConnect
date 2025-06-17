@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
-
 const SignupForm = () => {
   const [form, setForm] = useState({
     name: '',
@@ -40,7 +39,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="form-container">
+    <div style={{ maxWidth: 400, margin: 'auto' }}>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
@@ -54,10 +53,9 @@ const SignupForm = () => {
         </select>
         <button type="submit">Register</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p style={{ marginTop: '1rem', color: 'green' }}>{message}</p>}
     </div>
   );
 };
 
 export default SignupForm;
-

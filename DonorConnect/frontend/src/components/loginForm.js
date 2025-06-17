@@ -1,5 +1,8 @@
+// src/components/LoginForm.js
 import React, { useState } from 'react';
 import axios from '../api/axios';
+import { Link } from 'react-router-dom';
+import './FormStyles.css';
 
 const LoginForm = () => {
   const [form, setForm] = useState({
@@ -33,7 +36,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <div className="form-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -59,7 +62,11 @@ const LoginForm = () => {
         </select>
         <button type="submit">Login</button>
       </form>
-      {message && <p style={{ marginTop: '1rem', color: 'green' }}>{message}</p>}
+      {message && <p className="message">{message}</p>}
+
+      <p className="link-note">
+        Don’t have an account? <Link to="/">Sign up here</Link>
+      </p>
     </div>
   );
 };

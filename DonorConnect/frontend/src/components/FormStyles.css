@@ -1,0 +1,135 @@
+/* src/components/FormStyles.css */
+
+.form-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: #1f1f1f;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  animation: slideUpFade 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #d90429;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #f9f9f9;
+  color: #1f1f1f;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #d90429;
+  box-shadow: 0 0 0 3px rgba(217, 4, 41, 0.2);
+  transform: scale(1.02);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d90429;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #b80024;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.message,
+.error {
+  margin-top: 1rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  color: #28a745;
+}
+
+.error {
+  color: #d90429;
+}
+
+.link-note {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.link-note a {
+  position: relative;
+  color: #d90429;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.link-note a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #d90429;
+  bottom: -2px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.link-note a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.link-note a:hover {
+  text-decoration: none;
+}
