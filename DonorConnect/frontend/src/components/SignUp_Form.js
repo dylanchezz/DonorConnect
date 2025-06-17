@@ -1,9 +1,7 @@
-// src/components/SignupForm.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
-import './Form.css';
+
 
 const SignupForm = () => {
   const [form, setForm] = useState({
