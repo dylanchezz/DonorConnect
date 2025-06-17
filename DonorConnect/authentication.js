@@ -11,7 +11,7 @@ const generateToken = (user, role) => {
   return jwt.sign({ id: user.id, email: user.email, role }, JWT_SECRET, { expiresIn: '7d' });
 };
 
-// Register (common route for all roles)
+// Register 
 router.post('/register', async (req, res) => {
   const { name, email, phone, password, role } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
