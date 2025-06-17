@@ -29,6 +29,7 @@ const LoginForm = () => {
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       setMessage(`Welcome ${user.name} (${user.role})`);
+
       // redirect or navigate to dashboard if needed
     } catch (err) {
       setMessage(err.response?.data?.error || 'Login failed');
