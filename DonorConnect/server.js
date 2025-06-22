@@ -1,4 +1,4 @@
-// server.js (ES Module)
+
 
 import express from 'express';
 import cors from 'cors';
@@ -16,7 +16,8 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+
 
 // API Routes
 app.use('/api/auth', authRoutes);         // Patient/Donor/Admin auth

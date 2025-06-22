@@ -1,4 +1,3 @@
-//src/components/PatientSidebar.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaHome, FaPlus, FaListAlt, FaUser, FaSignOutAlt } from 'react-icons/fa';

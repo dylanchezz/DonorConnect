@@ -2,6 +2,8 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from './db.js';
+import { generateOTP, getExpiryTime } from './utils/otp.js';
+import { sendEmail } from './utils/sendEmail.js';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
@@ -56,6 +58,48 @@ router.post('/login', async (req, res) => {
     res.json({ token, user: { id: user.id || user.patient_id || user.donor_id || user.admin_id, name: user.name, role } });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+//otp verification
+router.post('/send-otp', async (req, res) => {
+  const { email } = req.body;
+  const otp = generateOTP();
+  const expiry = getExpiryTime();
+
+  try {
+    const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+    const user = rows[0];
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    await db.query('UPDATE users SET otp = ?, otp_expiry = ? WHERE email = ?', [otp, expiry, email]);
+
+    await sendEmail(email, 'Your DonorConnect OTP', `<h2>${otp}</h2><p>Expires in 10 minutes.</p>`);
+    res.json({ message: 'OTP sent via email' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to send OTP' });
+  }
+});
+
+//verify otp
+router.post('/verify-otp', async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+    const user = rows[0];
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (user.otp !== otp || new Date() > new Date(user.otp_expiry)) {
+      return res.status(400).json({ error: 'Invalid or expired OTP' });
+    }
+
+    await db.query('UPDATE users SET otp = NULL, otp_expiry = NULL WHERE email = ?', [email]);
+
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, user: { id: user.id, name: user.name, role: user.role } });
+  } catch (err) {
+    res.status(500).json({ error: 'OTP verification failed' });
   }
 });
 

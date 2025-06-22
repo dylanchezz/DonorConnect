@@ -9,14 +9,14 @@ try {
 
   console.log('Connected to MySQL');
 
-  // Create database
+
   await con.query('CREATE DATABASE IF NOT EXISTS blood_donation');
   console.log("Database 'blood_donation' created (or already exists)");
 
-  // Switch to that database
+  
   await con.query('USE blood_donation');
 
-  // Create Patients table
+  // Patients table
   await con.query(`
     CREATE TABLE IF NOT EXISTS patients (
       patient_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,15 +24,16 @@ try {
       email VARCHAR(100) UNIQUE NOT NULL,
       phone VARCHAR(20),
       password VARCHAR(255) NOT NULL,
-      blood_type VARCHAR(5),
       location VARCHAR(100),
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
+      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
+
     )
   `);
   console.log("Patients table created");
 
-  // Create Donors table
+  // Donors table
   await con.query(`
     CREATE TABLE IF NOT EXISTS donors (
       donor_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,16 +43,16 @@ try {
       password VARCHAR(255) NOT NULL,
       blood_type VARCHAR(5),
       location VARCHAR(100),
-      weight_kg FLOAT,
-      age INT,
       last_donation_date DATE,
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
+      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
+
     )
   `);
   console.log("Donors table created");
 
-  // Create Admins table
+  // Admins table
   await con.query(`
     CREATE TABLE IF NOT EXISTS admins (
       admin_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,11 +62,13 @@ try {
       password VARCHAR(255) NOT NULL,
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
+      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
+
     )
   `);
   console.log("Admins table created");
 
-  // Create Blood Requests table
+  // Blood Requests table
   await con.query(`
     CREATE TABLE IF NOT EXISTS blood_requests (
       request_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,7 +84,7 @@ try {
   `);
   console.log("Blood_requests table created");
 
-  // Create Donor Responses table
+  //  Donor Responses table
   await con.query(`
     CREATE TABLE IF NOT EXISTS donor_responses (
       response_id INT AUTO_INCREMENT PRIMARY KEY,

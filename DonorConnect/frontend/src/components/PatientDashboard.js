@@ -1,4 +1,3 @@
-// src/components/PatientDashboard.js
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import PatientSidebar from './PatientSidebar';
@@ -97,7 +96,7 @@ const PatientDashboard = () => {
 
         <section id="profile">
           <h3>Profile</h3>
-          <p>Edit profile (coming soon)</p>
+          <button>Edit profile</button>
         </section>
       </main>
     </div>
