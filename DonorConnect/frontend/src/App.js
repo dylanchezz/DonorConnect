@@ -2,10 +2,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import SignupForm from './components/SignUp_Form';
-import LoginForm from './components/loginForm';
-import PatientDashboard from './components/PatientDashboard';
-import OTPForm from './components/OTPForm';
+import SignupForm from './pages/SignUp_Form';
+import LoginForm from './pages/LoginForm';
+import PatientDashboard from './pages/PatientDashboard';
+import Eligibility from './pages/eligibility';
+import Profile from './pages/Profile';
+
+
 
 function App() {
   return (
@@ -13,15 +16,13 @@ function App() {
       <div className="App">
         <h1>BloodConnect</h1>
         <Routes>
-        <Route path="/verify-otp" element={<OTPForm />} />
-
           <Route path="/" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/otp" element={<OTPForm />} />
           <Route path="/patient-dashboard" element={<PatientDashboard />} />
-          {/* Future dashboards can go here */}
-          {/* <Route path="/donor-dashboard" element={<DonorDashboard />} /> */}
-          {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
+          <Route path="/eligibility" element={<Eligibility/>} />
+          <Route path="/profile" element={<Profile />} />
+          
+
         </Routes>
       </div>
     </Router>

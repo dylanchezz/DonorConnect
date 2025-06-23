@@ -131,3 +131,22 @@ button[type="submit"]:active {
 .link-note a:hover {
   text-decoration: none;
 }
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.form-container input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+.message {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: green;
+}

@@ -77,6 +77,7 @@ try {
       units_needed INT NOT NULL,
       urgency_level VARCHAR(20),
       status ENUM('Pending', 'Matched', 'Fulfilled', 'Cancelled') DEFAULT 'Pending',
+      reason TEXT,
       location VARCHAR(100),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (patient_id) REFERENCES patients(patient_id)

@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import axios from '../api/axios';
 import { Link, useNavigate } from 'react-router-dom';
-import './FormStyles.css';
+import '../styles/FormStyles.css';
 
 const LoginForm = () => {
   const [form, setForm] = useState({
     email: '',
+    password: '',
     role: 'Patient',
   });
 
@@ -25,23 +26,23 @@ const LoginForm = () => {
     setMessage('');
 
     try {
-      // Step 1: Send OTP
-      await axios.post('/auth/send-otp', { email: form.email });
+      const res = await axios.post('/auth/login', form);
+      const { token, user } = res.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setMessage(`Welcome ${user.name} (${user.role})`);
 
-      // Step 2: Store email and role temporarily for OTP verification
-      localStorage.setItem('pendingEmail', form.email);
-      localStorage.setItem('pendingRole', form.role);
-
-      // Step 3: Redirect to OTP input screen
-      navigate('/verify-otp');
+      if (user.role === 'Patient') navigate('/patient-dashboard');
+      else if (user.role === 'Donor') navigate('/donor-dashboard');
+      else navigate('/admin-dashboard');
     } catch (err) {
-      setMessage(err.response?.data?.error || 'Failed to send OTP');
+      setMessage(err.response?.data?.error || 'Login failed');
     }
   };
 
   return (
     <div className="form-container">
-      <h2>Login with OTP</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -51,14 +52,20 @@ const LoginForm = () => {
           onChange={handleChange}
           required
         />
-
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
         <select name="role" value={form.role} onChange={handleChange}>
           <option value="Patient">Patient</option>
           <option value="Donor">Donor</option>
           <option value="Admin">Admin</option>
         </select>
-
-        <button type="submit">Send OTP</button>
+        <button type="submit">Login</button>
       </form>
 
       {message && <p className="message">{message}</p>}

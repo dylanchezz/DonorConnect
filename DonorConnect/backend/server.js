@@ -1,14 +1,15 @@
 
-
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 // Route imports (use relative paths with forward slashes)
-import authRoutes from './authentication.js';
-import requestRoutes from './requests.js';
-import responseRoutes from './responses.js';
+import authRoutes from './routes/authentication.js';
+import responseRoutes from './routes/responses.js';
+import patientRoutes from './routes/patientRoutes.js';
+import requestRoutes from './routes/requests.js';
+
 
 dotenv.config();
 
@@ -23,6 +24,11 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);         // Patient/Donor/Admin auth
 app.use('/api/requests', requestRoutes);  // Patient submits blood requests
 app.use('/api/responses', responseRoutes); // Donor responds to requests
+app.use('/api/patient', patientRoutes);
+
+
+
+
 
 // Home route
 app.get('/', (req, res) => {

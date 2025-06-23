@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "africastalking": "^0.7.3",
     "axios": "^1.10.0",
+    "framer-motion": "^12.19.1",
     "nodemailer": "^7.0.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
