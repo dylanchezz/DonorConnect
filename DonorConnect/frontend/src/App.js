@@ -7,6 +7,7 @@ import LoginForm from './pages/LoginForm';
 import PatientDashboard from './pages/PatientDashboard';
 import Eligibility from './pages/eligibility';
 import Profile from './pages/Profile';
+import LandingPage from './pages/LandingPage';
 import DonorDashboard from './pages/DonorDashboard';
 
 
@@ -14,12 +15,12 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1>BloodConnect</h1>
         <Routes>
-          <Route path="/" element={<SignupForm />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<LandingPage />} />                    {/* ✅ now default */}
+          <Route path="/signup" element={<SignupForm />} />              {/* ⬅ Sign Up page */}
+          <Route path="/login" element={<LoginForm />} />                {/* ⬅ Login page */}
           <Route path="/patient-dashboard" element={<PatientDashboard />} />
-          <Route path="/eligibility" element={<Eligibility/>} />
+          <Route path="/eligibility" element={<Eligibility />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/donor-dashboard" element={<DonorDashboard />} />
           

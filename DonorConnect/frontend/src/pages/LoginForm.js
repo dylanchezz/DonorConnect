@@ -71,7 +71,7 @@ const LoginForm = () => {
       {message && <p className="message">{message}</p>}
 
       <p className="link-note">
-        Don’t have an account? <Link to="/">Sign up here</Link>
+        Don’t have an account? <Link to="/signup">Sign up here</Link>
       </p>
     </div>
   );
