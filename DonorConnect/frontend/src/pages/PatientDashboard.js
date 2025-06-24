@@ -35,12 +35,15 @@ const PatientDashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!eligibleByChecklist) return;
+    if (!eligibleByChecklist) {
+      setMessage("❌ You're not eligible to submit a request.");
+      return;
+    }
 
     setMessage('');
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/patient/requests', form, {
+      await axios.post('/api/requests/request', form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('✅ Blood request submitted!');
@@ -54,7 +57,7 @@ const PatientDashboard = () => {
   const fetchRequests = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('/patient/my-requests', {
+      const res = await axios.get('/api/requests/my-requests', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRequests(res.data.requests || []);
@@ -79,7 +82,7 @@ const PatientDashboard = () => {
 
   return (
     <div className="dashboard-layout">
-      <PatientSidebar />
+      <PatientSidebar customStyle />
       <main className="dashboard-main">
         <motion.section id="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
           <h2 className="animated-heading">👋 Welcome to your Dashboard</h2>
@@ -134,7 +137,7 @@ const PatientDashboard = () => {
               </label>
 
               <label>
-                Have you had any recent illness?
+                Recent Illness:
                 <select name="recentIllness" value={eligibility.recentIllness} onChange={handleEligibilityChange} required>
                   <option value="">--Select--</option>
                   <option value="No">No</option>
@@ -143,7 +146,7 @@ const PatientDashboard = () => {
               </label>
 
               <label>
-                Are you currently pregnant?
+                Pregnant:
                 <select name="pregnant" value={eligibility.pregnant} onChange={handleEligibilityChange} required>
                   <option value="">--Select--</option>
                   <option value="No">No</option>

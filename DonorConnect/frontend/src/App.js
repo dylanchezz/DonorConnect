@@ -7,7 +7,7 @@ import LoginForm from './pages/LoginForm';
 import PatientDashboard from './pages/PatientDashboard';
 import Eligibility from './pages/eligibility';
 import Profile from './pages/Profile';
-
+import DonorDashboard from './pages/DonorDashboard';
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
           <Route path="/patient-dashboard" element={<PatientDashboard />} />
           <Route path="/eligibility" element={<Eligibility/>} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/donor-dashboard" element={<DonorDashboard />} />
           
 
         </Routes>
