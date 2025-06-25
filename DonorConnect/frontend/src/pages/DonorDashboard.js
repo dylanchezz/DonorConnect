@@ -60,7 +60,12 @@ const DonorDashboard = () => {
           <h2 className="animated-heading">👋 Welcome, Donor</h2>
         </motion.section>
 
-        <motion.section id="availability" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
+        <motion.section
+          id="availability"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
           <h3>✅ Share Your Availability</h3>
           <form onSubmit={handleSubmit} className="blood-request-form">
             <label>
@@ -93,7 +98,12 @@ const DonorDashboard = () => {
 
             <label>
               Notes:
-              <textarea name="notes" value={availability.notes} onChange={handleChange} placeholder="Optional notes (e.g., time, preference)" />
+              <textarea
+                name="notes"
+                value={availability.notes}
+                onChange={handleChange}
+                placeholder="Optional notes (e.g., time, preference)"
+              />
             </label>
 
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} type="submit">
@@ -103,7 +113,12 @@ const DonorDashboard = () => {
           {message && <p className="message">{message}</p>}
         </motion.section>
 
-        <motion.section id="history" initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
+        <motion.section
+          id="history"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.9 }}
+        >
           <h3>📜 Donation History</h3>
           {history.length === 0 ? (
             <p>No donation history yet.</p>
@@ -111,16 +126,27 @@ const DonorDashboard = () => {
             <div className="request-cards">
               {history.map((item, index) => (
                 <motion.div className="request-card" key={index} whileHover={{ scale: 1.02 }}>
-                  <p><strong>Date:</strong> {item.date}</p>
-                  <p><strong>Location:</strong> {item.location}</p>
-                  <p><strong>Status:</strong> {item.status}</p>
+                  <p>
+                    <strong>Date:</strong> {item.date}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {item.location}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {item.status}
+                  </p>
                 </motion.div>
               ))}
             </div>
           )}
         </motion.section>
 
-        <motion.section id="profile" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+        <motion.section
+          id="profile"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           <h3>👤 Profile</h3>
           <p>Edit profile (coming soon)</p>
         </motion.section>
