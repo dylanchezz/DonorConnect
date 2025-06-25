@@ -10,6 +10,11 @@ import WelcomePatient from './pages/WelcomePatient';
 import RequestBlood from './pages/RequestBlood';
 import Eligibility from './pages/eligibility';
 import Profile from './pages/Profile';
+<<<<<<< HEAD
+=======
+import LandingPage from './pages/LandingPage';
+import DonorDashboard from './pages/DonorDashboard';
+>>>>>>> a30e86a8666911b26d0a0c4865c41ad9b0f3a936
 
 import DonorDashboard from './pages/DonorDashboard';
 
@@ -18,9 +23,20 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+<<<<<<< HEAD
           {/* Public Routes */}
           <Route path="/" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
+=======
+          <Route path="/" element={<LandingPage />} />                    {/* ✅ now default */}
+          <Route path="/signup" element={<SignupForm />} />              {/* ⬅ Sign Up page */}
+          <Route path="/login" element={<LoginForm />} />                {/* ⬅ Login page */}
+          <Route path="/patient-dashboard" element={<PatientDashboard />} />
+          <Route path="/eligibility" element={<Eligibility />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/donor-dashboard" element={<DonorDashboard />} />
+          
+>>>>>>> a30e86a8666911b26d0a0c4865c41ad9b0f3a936
 
           {/* Patient Dashboard Layout with Nested Routes */}
           <Route path="/patient-dashboard" element={<PatientDashboard />}>
