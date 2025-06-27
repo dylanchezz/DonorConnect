@@ -19,6 +19,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Blood Donation Request System API is running');
+});
 
 // API Routes
 app.use('/api/auth', authRoutes);         // Patient/Donor/Admin auth
@@ -26,14 +29,6 @@ app.use('/api/requests', requestRoutes);  // Patient submits blood requests
 app.use('/api/responses', responseRoutes); // Donor responds to requests
 app.use('/api/patient', patientRoutes);
 
-
-
-
-
-// Home route
-app.get('/', (req, res) => {
-  res.send('Blood Donation Request System API is running');
-});
 
 // Start server
 const PORT = process.env.PORT || 3001;

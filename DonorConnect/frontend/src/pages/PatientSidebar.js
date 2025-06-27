@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { FaHome, FaPlus, FaListAlt, FaUser, FaCheckCircle, FaSignOutAlt } from 'react-icons/fa';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FaHome, FaPlus, FaCheckCircle, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import '../styles/PatientSidebar.css';
 
 const PatientSidebar = () => {
@@ -15,11 +15,10 @@ const PatientSidebar = () => {
     <aside className="sidebar">
       <h2 className="sidebar-title">🩸 BloodConnect</h2>
       <nav className="sidebar-nav">
-        <Link to="/dashboard"><FaHome /> Dashboard</Link>
-        <Link to="/request"><FaPlus /> Request Blood</Link>
-        <Link to="/eligibility"><FaCheckCircle /> Eligibility</Link>
-        <Link to="/requests"><FaListAlt /> My Requests</Link>
-        <Link to="/profile"><FaUser /> Profile</Link>
+        <NavLink to="" end><FaHome /> Dashboard</NavLink>
+        <NavLink to="request"><FaPlus /> Request Blood</NavLink>
+        <NavLink to="eligibility"><FaCheckCircle /> Eligibility</NavLink>
+        <NavLink to="profile"><FaUser /> Profile</NavLink>
         <button onClick={handleLogout}><FaSignOutAlt /> Logout</button>
       </nav>
     </aside>

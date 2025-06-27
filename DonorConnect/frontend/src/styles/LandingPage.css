@@ -1,103 +1,149 @@
-.landing {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #1f1f1f;
-  line-height: 1.6;
-  background: linear-gradient(to bottom, #fff1f1, #ffe5e5, #ffd6d6);
-  min-height: 100vh;
-}
-
-.hero-section {
-  height: 100vh;
+/* Top Navbar */
+/* Top Navbar */
+.top-navbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  background-color: #ffffff;
+  padding: 8px 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-logo {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
+  margin-right: 8px;
+}
+
+.top-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #d90429;
+}
+
+
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to bottom right, #fff5f5, #ffe5e5);
+  text-align: center;
+  padding: 80px 20px;
   position: relative;
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.6); /* dark overlay */
-  color: white;
-  padding: 2.5rem;
+  background-color: rgba(70, 60, 60, 0.85);
+  padding: 40px;
   border-radius: 12px;
-  text-align: center;
+  display: inline-block;
+  color: #fff;
   max-width: 700px;
-}
-
-.overlay h1 {
-  font-size: 2.7rem;
-  margin-bottom: 1rem;
-}
-
-.overlay p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin: 0 auto;
 }
 
 .hero-buttons button {
+  margin: 10px;
+  padding: 10px 24px;
   background-color: #d90429;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  margin: 0 0.5rem;
-  font-size: 1rem;
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
 .hero-buttons button:hover {
-  background-color: #a4001f;
+  background-color: #a5031f;
 }
 
-.info-section,
-.features-section,
-.cta-section,
-.how-section {
-  padding: 3rem 2rem;
+
+/* General Section Styles */
+.info-section, .how-section, .features-section, .cta-section {
+  padding: 60px 20px;
   text-align: center;
-  /* No background here to allow the gradient from .landing */
+  background-color: #fff;
 }
 
+.info-section, .features-section {
+  background-color: #fdfdfd;
+}
+
+
+/* How It Works Section */
 .how-steps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 
 .step {
-  max-width: 250px;
-  margin-bottom: 2rem;
+  background: #fff4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
+.step:hover {
+  transform: translateY(-5px);
+}
+
+
+/* Features Section */
 .features-section ul {
   list-style: none;
-  padding: 0;
-  margin-top: 1.5rem;
+  padding-left: 0;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .features-section li {
-  margin: 0.75rem 0;
+  margin: 12px 0;
   font-size: 1.1rem;
+  position: relative;
+  padding-left: 24px;
 }
 
+.features-section li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #d90429;
+  font-weight: bold;
+}
+
+
+/* CTA Section */
 .cta-section button {
   background-color: #d90429;
+  padding: 14px 30px;
   color: white;
-  padding: 0.75rem 1.5rem;
+  font-weight: bold;
   font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .cta-section button:hover {
-  background-color: #a4001f;
+  background-color: #a5031f;
 }
 
+
+/* Footer */
 .footer {
-  background: #d90429;
-  color: white;
   text-align: center;
-  padding: 1rem;
+  padding: 20px;
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  color: #555;
 }

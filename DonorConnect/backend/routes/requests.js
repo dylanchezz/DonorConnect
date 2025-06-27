@@ -4,7 +4,7 @@ import db from '../db.js'; // Adjust path to your db.js file
 const router = express.Router();
 
 // POST /api/requests
-router.post('/', (req, res) => {
+router.post('/request', (req, res) => {
   const { bloodType, units, urgency, location, reason } = req.body;
   const patient_id = req.user?.id || 1; // Use decoded JWT later
 
