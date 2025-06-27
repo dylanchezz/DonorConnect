@@ -23,20 +23,9 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-<<<<<<< HEAD
           {/* Public Routes */}
           <Route path="/" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
-=======
-          <Route path="/" element={<LandingPage />} />                    {/* ✅ now default */}
-          <Route path="/signup" element={<SignupForm />} />              {/* ⬅ Sign Up page */}
-          <Route path="/login" element={<LoginForm />} />                {/* ⬅ Login page */}
-          <Route path="/patient-dashboard" element={<PatientDashboard />} />
-          <Route path="/eligibility" element={<Eligibility />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/donor-dashboard" element={<DonorDashboard />} />
-          
->>>>>>> a30e86a8666911b26d0a0c4865c41ad9b0f3a936
 
           {/* Patient Dashboard Layout with Nested Routes */}
           <Route path="/patient-dashboard" element={<PatientDashboard />}>
