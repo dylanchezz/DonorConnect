@@ -1,30 +1,85 @@
+/* styles/WelcomePatient.css */
+
 .welcome-container {
     padding: 2rem;
-    text-align: center;
+    background: linear-gradient(to right, #f7f7f7, #fff);
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .welcome-card {
     background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+    animation: fadeIn 0.7s ease-in-out;
   }
   
-  .welcome-container h1 {
-    color: #008080;
-    font-size: 2rem;
+  .welcome-card h2 {
+    font-size: 2.2rem;
+    color: #d90429;
     margin-bottom: 1rem;
   }
   
-  .welcome-container p {
+  .welcome-card p {
     font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+  
+  .quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .quick-links a {
+    padding: 0.8rem 1.5rem;
+    background-color: #d90429;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .quick-links a:hover {
+    background-color: #a3021f;
   }
   
   .welcome-graphic {
-    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2rem;
+    animation: slideUp 0.7s ease-out;
   }
   
-  .quick-actions {
-    margin-top: 2rem;
-    font-size: 1rem;
-    line-height: 1.5;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   

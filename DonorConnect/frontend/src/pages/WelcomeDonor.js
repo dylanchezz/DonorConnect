@@ -1,32 +1,30 @@
-// src/pages/WelcomeDonor.js
-import React from 'react';
-import { motion } from 'framer-motion';
-import '../styles/WelcomeDonor.css';
+import '../styles/WelcomePatient.css'; // Reuse same styling for consistency
+import { Link } from 'react-router-dom';
+import donorImage from '../assets/request.png'; // Replace with your donor-specific image
 
 const WelcomeDonor = () => {
   return (
-    <motion.div
-      className="welcome-container"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <h1>🙌 Welcome, Lifesaver!</h1>
-      <p>Thank you for being a part of the BloodConnect donor community. Your generosity saves lives.</p>
+    <div className="welcome-container">
+      <div className="welcome-card">
+        <h2>🩸 Welcome to BloodConnect, Donor</h2>
+        <p>
+          Thank you for stepping up to save lives. Share your availability, view your donation history, or update your profile.
+        </p>
 
-      <div className="welcome-graphic">
+        <div className="quick-links">
+          <Link to="availability">Availability</Link>
+          <Link to="history">Donation History</Link>
+          <Link to="profile">Your Profile</Link>
+        </div>
+
         <img
-          src="https://cdn-icons-png.flaticon.com/512/1690/1690620.png"
-          alt="Donor"
-          width="220"
+          src={donorImage}
+          alt="Donor Welcome"
+          className="welcome-graphic"
+          style={{ width: '200px', height: 'auto', borderRadius: '10px' }}
         />
       </div>
-
-      <div className="quick-actions">
-        <p><strong>Ready to donate?</strong> Update your availability soon.</p>
-        <p><strong>Want to track past donations?</strong> Coming soon under the History section.</p>
-      </div>
-    </motion.div>
+    </div>
   );
 };
 

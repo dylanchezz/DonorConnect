@@ -1,16 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/DonorSidebar.css'; // uses the same sidebar styling as dashboard
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FaHome, FaCheckCircle, FaHistory, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import '../styles/DonorSidebar.css';
 
-const DonorSidebar = ({ customStyle }) => {
+const DonorSidebar = () => {
   const navigate = useNavigate();
-
-  const handleNav = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -18,15 +12,25 @@ const DonorSidebar = ({ customStyle }) => {
   };
 
   return (
-    <aside className={`sidebar ${customStyle ? 'custom-sidebar' : ''}`}>
-      <div className="logo">🩸 Donor Panel</div>
-      <ul>
-        <li onClick={() => handleNav('dashboard')}>Dashboard</li>
-        <li onClick={() => handleNav('availability')}>Availability</li>
-        <li onClick={() => handleNav('history')}>History</li>
-        <li onClick={() => handleNav('profile')}>Profile</li>
-        <li onClick={handleLogout}>Logout</li>
-      </ul>
+    <aside className="sidebar">
+      <h2 className="sidebar-title">🩸 BloodConnect</h2>
+      <nav className="sidebar-nav">
+        <NavLink to="" end className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaHome /> Dashboard
+        </NavLink>
+        <NavLink to="availability" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaCheckCircle /> Availability
+        </NavLink>
+        <NavLink to="history" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaHistory /> History
+        </NavLink>
+        <NavLink to="profile" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaUser /> Profile
+        </NavLink>
+        <button onClick={handleLogout}>
+          <FaSignOutAlt /> Logout
+        </button>
+      </nav>
     </aside>
   );
 };

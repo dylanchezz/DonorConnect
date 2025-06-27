@@ -15,11 +15,21 @@ const PatientSidebar = () => {
     <aside className="sidebar">
       <h2 className="sidebar-title">🩸 BloodConnect</h2>
       <nav className="sidebar-nav">
-        <NavLink to="" end><FaHome /> Dashboard</NavLink>
-        <NavLink to="request"><FaPlus /> Request Blood</NavLink>
-        <NavLink to="eligibility"><FaCheckCircle /> Eligibility</NavLink>
-        <NavLink to="profile"><FaUser /> Profile</NavLink>
-        <button onClick={handleLogout}><FaSignOutAlt /> Logout</button>
+        <NavLink to="" end className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaHome /> Dashboard
+        </NavLink>
+        <NavLink to="request" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaPlus /> Request Blood
+        </NavLink>
+        <NavLink to="eligibility" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaCheckCircle /> Eligibility
+        </NavLink>
+        <NavLink to="profile" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaUser /> Profile
+        </NavLink>
+        <button onClick={handleLogout}>
+          <FaSignOutAlt /> Logout
+        </button>
       </nav>
     </aside>
   );

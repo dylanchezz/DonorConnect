@@ -5,10 +5,6 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
-/**
- * GET /api/patient/profile
- * Fetch current patient's profile
- */
 router.get('/profile', authenticateToken, async (req, res) => {
   const patientId = req.user.id;
 
