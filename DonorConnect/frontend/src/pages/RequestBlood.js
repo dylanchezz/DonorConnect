@@ -20,10 +20,21 @@ const RequestBlood = () => {
   });
 
   const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [eligibleByChecklist, setEligibleByChecklist] = useState(true);
 
+  useEffect(() => {
+    const isEligible =
+      eligibility.age === '18-65' &&
+      eligibility.weight === '50+' &&
+      eligibility.recentIllness === 'No' &&
+      eligibility.pregnant === 'No';
+    setEligibleByChecklist(isEligible);
+  }, [eligibility]);
+
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEligibilityChange = (e) => {
@@ -33,41 +44,66 @@ const RequestBlood = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!eligibleByChecklist) {
-      setMessage("❌ You're not eligible to submit a request.");
+  
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setMessage("❌ You're not logged in.");
       return;
     }
-
-    setMessage('');
+  
+    // Log data being submitted
+    console.log('Submitting eligibility data:', {
+      age: eligibility.age,
+      weight: eligibility.weight,
+      recentIllness: eligibility.recentIllness,
+      pregnant: eligibility.pregnant,
+      is_eligible: eligibleByChecklist,
+    });
+  
     try {
-      const token = localStorage.getItem('token');
-      await axios.post('/requests/request',form, {
+      await axios.post('/eligibility/submit', {
+        age: eligibility.age,
+        weight: eligibility.weight,
+        recentIllness: eligibility.recentIllness,
+        pregnant: eligibility.pregnant,
+        is_eligible: eligibleByChecklist,
+      }, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
-      setMessage('✅ Blood request submitted!');
+  
+      console.log("✅ Eligibility recorded");
+  
+      if (!eligibleByChecklist) {
+        setMessage("❌ You're not eligible to submit a request.");
+        return;
+      }
+  
+      setSubmitting(true);
+      setMessage('');
+  
+      const response = await axios.post('/requests/request', form, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+  
+      console.log('✅ Request Response:', response.data);
+  
       setForm({ bloodType: '', units: '', urgency: 'Normal', location: '', reason: '' });
+      setMessage('✅ Blood request submitted successfully.');
     } catch (err) {
-      setMessage('❌ Failed to submit request.');
+      console.error('Submission error:', err.response?.data || err.message);
+      setMessage(`❌ Failed: ${err.response?.data?.message || err.message}`);
+    } finally {
+      setSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    const isEligible =
-      eligibility.age === '18-65' &&
-      eligibility.weight === '50+' &&
-      eligibility.recentIllness === 'No' &&
-      eligibility.pregnant === 'No';
-
-    setEligibleByChecklist(isEligible);
-  }, [eligibility]);
+  
 
   return (
     <motion.div className="request-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
       <h2>🩸 Request Blood</h2>
-      <form onSubmit={handleSubmit} className="blood-request-form">
 
+      <form onSubmit={handleSubmit} className="blood-request-form">
+        {/* Blood Request Fields */}
         <label>Blood Type:
           <select name="bloodType" value={form.bloodType} onChange={handleChange} required>
             <option value="">--Select Blood Type--</option>
@@ -94,6 +130,7 @@ const RequestBlood = () => {
           </select>
         </label>
 
+        {/* Eligibility Checklist */}
         <div className="eligibility-checklist">
           <h4>📝 Eligibility Checklist</h4>
 
@@ -135,12 +172,24 @@ const RequestBlood = () => {
           type="submit"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          disabled={!eligibleByChecklist}
+          disabled={submitting || !eligibleByChecklist}
+          className={eligibleByChecklist ? 'eligible' : 'not-eligible'}
         >
-          Submit Request
+          {submitting
+            ? 'Submitting...'
+            : !eligibleByChecklist
+            ? 'Not Eligible'
+            : 'Submit Request'}
         </motion.button>
 
-        {message && <p className="message">{message}</p>}
+        {message && (
+          <p
+            className={`message ${message.startsWith('✅') ? 'success' : 'error'}`}
+            style={{ marginTop: '1rem', fontWeight: 'bold' }}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </motion.div>
   );

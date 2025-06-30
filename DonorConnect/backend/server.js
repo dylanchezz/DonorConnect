@@ -9,6 +9,7 @@ import authRoutes from './routes/authentication.js';
 import responseRoutes from './routes/responses.js';
 import patientRoutes from './routes/patientRoutes.js';
 import requestRoutes from './routes/requests.js';
+import eligibilityRoutes from './routes/eligibility.js';
 
 
 dotenv.config();
@@ -28,7 +29,7 @@ app.use('/api/auth', authRoutes);         // Patient/Donor/Admin auth
 app.use('/api/requests', requestRoutes);  // Patient submits blood requests
 app.use('/api/responses', responseRoutes); // Donor responds to requests
 app.use('/api/patient', patientRoutes);
-
+app.use('/api/eligibility', eligibilityRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3001;

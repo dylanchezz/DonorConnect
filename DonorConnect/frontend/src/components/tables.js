@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 
+(async () => {
 try {
   const con = await mysql.createConnection({
     host: 'localhost',
@@ -32,6 +33,22 @@ try {
   `);
   console.log("Patients table created");
 
+  //eligibility table
+  await con.query(`
+  CREATE TABLE IF NOT EXISTS eligibility (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    age_group VARCHAR(20),
+    weight_category VARCHAR(20),
+    recent_illness VARCHAR(10),
+    pregnant VARCHAR(10),
+    is_eligible TINYINT(1),
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
+  );
+  `);
+  console.log("Eligibility table created");
+  
+
   // Donors table
   await con.query(`
     CREATE TABLE IF NOT EXISTS donors (
@@ -45,7 +62,7 @@ try {
       last_donation_date DATE,
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
-      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
+
 
     )
   `);
@@ -103,3 +120,5 @@ try {
 } catch (err) {
   console.error(' Error:', err.message);
 }
+})();
+

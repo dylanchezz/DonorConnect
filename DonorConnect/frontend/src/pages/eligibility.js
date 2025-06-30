@@ -1,53 +1,69 @@
-// Eligibility.js
+// src/components/Eligibility.js
 import React, { useEffect, useState } from 'react';
 import axios from '../api/axios';
+import { Link } from 'react-router-dom';
+import '../styles/PatientDashboard.css';
 
 const Eligibility = () => {
-  const [systemEligibility, setSystemEligibility] = useState(null);
-  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const checkSystemEligibility = async () => {
+    const fetchEligibility = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError("You're not logged in.");
+        return;
+      }
+
       try {
-        const res = await axios.get('/patient/eligibility', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        const res = await axios.get('/eligibility/latest', {
+          headers: { Authorization: `Bearer ${token}` },
         });
-        setSystemEligibility(res.data.eligible);
-        setMessage(res.data.message);
-      } catch (error) {
-        setSystemEligibility(false);
-        setMessage('Error checking eligibility.');
+        setStatus(res.data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch eligibility status.');
       }
     };
 
-    checkSystemEligibility();
+    fetchEligibility();
   }, []);
 
   return (
-    <div className="eligibility-container">
-      <h2>Eligibility to Request Blood</h2>
+    <div className="eligibility-status">
+      <h2>🩺 Eligibility Summary</h2>
 
-      <section className="checklist">
-        <h3>✔️ Medical & Personal Checklist</h3>
-        <ul>
-          <li>✅ You are between 18 and 65 years old</li>
-          <li>✅ You weigh more than 50kg</li>
-          <li>✅ You are not pregnant or within 6 weeks postpartum</li>
-          <li>✅ You do not have major chronic conditions like HIV, hepatitis, cancer</li>
-          <li>✅ You are not currently sick or recovering from recent surgery</li>
+      {error && <p className="error">{error}</p>}
+
+      {!status ? (
+        <p>No eligibility check submitted yet.</p>
+      ) : (
+        <>
+          <p><strong>Status:</strong> {status.is_eligible ? '✅ Eligible' : '❌ Not Eligible'}</p>
+          <p><strong>Checked At:</strong> {new Date(status.checked_at).toLocaleString()}</p>
+          <p><strong>Age Group:</strong> {status.age_group}</p>
+          <p><strong>Weight:</strong> {status.weight_category}</p>
+          <p><strong>Recent Illness:</strong> {status.recent_illness}</p>
+          <p><strong>Pregnant:</strong> {status.pregnant}</p>
+        </>
+      )}
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <h4>🔍 Eligibility Criteria:</h4>
+        <ul style={{ paddingLeft: '1.2rem' }}>
+          <li>✔️ Age between 18 and 65</li>
+          <li>✔️ Weight of 50kg or more</li>
+          <li>✔️ No recent illness</li>
+          <li>✔️ Not currently pregnant</li>
         </ul>
-      </section>
+      </div>
 
-      <section className="system-eligibility">
-        <h3>🛡️ System Check</h3>
-        {systemEligibility === null ? (
-          <p>Checking request history...</p>
-        ) : systemEligibility ? (
-          <p className="eligible">✅ You are eligible to request blood. {message}</p>
-        ) : (
-          <p className="not-eligible">❌ You are not eligible. {message}</p>
-        )}
-      </section>
+      <div style={{ marginTop: '1.5rem' }}>
+        <Link to="/patient-dashboard" className="edit-link">
+          ✏️ Update Eligibility Information
+        </Link>
+      </div>
     </div>
   );
 };
