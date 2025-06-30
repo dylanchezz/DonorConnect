@@ -27,7 +27,6 @@ try {
       location VARCHAR(100),
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
-      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
 
     )
   `);
@@ -62,7 +61,6 @@ try {
       password VARCHAR(255) NOT NULL,
       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       last_login TIMESTAMP NULL
-      ALTER TABLE users ADD COLUMN otp VARCHAR(6), ADD COLUMN otp_expiry DATETIME;
 
     )
   `);

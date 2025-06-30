@@ -43,5 +43,3 @@ router.get('/my-requests', (req, res) => {
     res.status(200).json({ requests: results });
   });
 });
-
-export default router;
