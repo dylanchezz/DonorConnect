@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaPlus, FaCheckCircle, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaPlus, FaCheckCircle, FaUser, FaSignOutAlt, FaBell, FaLifeRing } from 'react-icons/fa';
 import '../styles/PatientSidebar.css';
 
 const PatientSidebar = () => {
@@ -23,6 +23,15 @@ const PatientSidebar = () => {
         </NavLink>
         <NavLink to="eligibility" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaCheckCircle /> Eligibility
+        </NavLink>
+        <NavLink to="requests" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaCheckCircle /> My Requests
+        </NavLink>
+        <NavLink to="notifications" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaBell /> Notifications
+        </NavLink>
+        <NavLink to="support" className={({ isActive }) => isActive ? 'active' : ''}>
+          <FaLifeRing /> Support
         </NavLink>
         <NavLink to="profile" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaUser /> Profile

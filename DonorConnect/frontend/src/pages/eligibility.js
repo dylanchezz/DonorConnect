@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../api/axios';
 import { Link } from 'react-router-dom';
 import '../styles/PatientDashboard.css';
+import '../styles/Eligibility.css'
 
 const Eligibility = () => {
   const [status, setStatus] = useState(null);

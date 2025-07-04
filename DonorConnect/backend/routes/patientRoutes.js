@@ -5,15 +5,26 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+/**
+ * GET /api/patient/profile
+ * Get current patient's profile
+ */
 router.get('/profile', authenticateToken, async (req, res) => {
   const patientId = req.user.id;
 
   try {
-    const [rows] = await db.query('SELECT name, email, phone FROM patients WHERE id = ?', [patient_id]);
-    if (!rows || rows.length === 0) return res.status(404).json({ error: 'Patient not found' });
+    const [rows] = await db.query(
+      'SELECT name, email, phone FROM patients WHERE patient_id = ?',
+      [patientId]
+    );
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: 'Patient not found' });
+    }
 
     res.json(rows[0]);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Failed to load profile' });
   }
 });
@@ -27,14 +38,14 @@ router.put('/profile', authenticateToken, async (req, res) => {
   const { name, email, phone } = req.body;
 
   try {
-    await db.query('UPDATE patients SET name = ?, email = ?, phone = ? WHERE id = ?', [
-      name,
-      email,
-      phone,
-      patient_id,
-    ]);
+    await db.query(
+      'UPDATE patients SET name = ?, email = ?, phone = ? WHERE patient_id = ?',
+      [name, email, phone, patient_id]
+    );
+
     res.json({ message: 'Profile updated successfully' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Failed to update profile' });
   }
 });

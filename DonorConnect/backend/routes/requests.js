@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -26,4 +27,53 @@ router.post('/request', (req, res) => {
     }
   );
 });
+
+// Get patient's requests
+// GET /api/requests/my-requests
+router.get('/my-requests', authenticateToken, async (req, res) => {
+  const patientId = req.user.id || req.user.patient_id;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM requests WHERE patient_id = ?', [patientId]);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch requests' });
+  }
+});
+
+
+// Update a request
+// PUT /api/requests/update/:id
+router.put('/update/:id', authenticateToken, async (req, res) => {
+  const { bloodType, units, urgency, location, reason } = req.body;
+  const { id } = req.params;
+  const patientId = req.user.id || req.user.patient_id;
+
+  try {
+    await db.query(
+      'UPDATE requests SET bloodType = ?, units = ?, urgency = ?, location = ?, reason = ? WHERE id = ? AND patient_id = ?',
+      [bloodType, units, urgency, location, reason, id, patientId]
+    );
+    res.json({ message: 'Request updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update request' });
+  }
+});
+
+
+// Delete a request
+// DELETE /api/requests/delete/:id
+router.delete('/delete/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const patientId = req.user.id || req.user.patient_id;
+
+  try {
+    await db.query('DELETE FROM requests WHERE id = ? AND patient_id = ?', [id, patientId]);
+    res.json({ message: 'Request cancelled successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete request' });
+  }
+});
+
+
 export default router;

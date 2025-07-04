@@ -7,37 +7,38 @@ const Profile = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
-    phone: '',
+    phone: ''
   });
   const [message, setMessage] = useState('');
 
-  // Load current user info
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
         const res = await axios.get('/patient/profile', {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         });
-        setForm(res.data); // assuming res.data = { name, email, phone }
+        setForm(res.data);
       } catch (err) {
         setMessage('⚠️ Failed to load profile');
       }
     };
+
     fetchProfile();
   }, []);
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
+
     try {
       const token = localStorage.getItem('token');
       const res = await axios.put('/patient/profile', form, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
       setMessage(res.data.message || '✅ Profile updated');
     } catch (err) {
@@ -47,7 +48,7 @@ const Profile = () => {
 
   return (
     <div className="form-container">
-      <h2>Edit Profile</h2>
+      <h2>📝 Edit Profile</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name:
@@ -55,7 +56,7 @@ const Profile = () => {
         </label>
         <label>
           Email:
-          <input name="email" value={form.email} onChange={handleChange} required />
+          <input type="email" name="email" value={form.email} onChange={handleChange} required />
         </label>
         <label>
           Phone:

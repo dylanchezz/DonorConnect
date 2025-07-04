@@ -1,23 +1,64 @@
-.eligibility-success {
-    background-color: #e6ffed;
-    border-left: 5px solid #28a745;
-    padding: 12px;
-    color: #155724;
-    margin-top: 20px;
-    border-radius: 6px;
+/* src/styles/Eligibility.css */
+.eligibility-status {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    margin: 2rem auto;
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    transition: all 0.3s ease-in-out;
   }
   
-  .eligibility-warning {
-    background-color: #ffe6e6;
-    border-left: 5px solid #dc3545;
-    padding: 12px;
-    color: #721c24;
-    margin-top: 20px;
-    border-radius: 6px;
+  .eligibility-status h2 {
+    font-size: 1.8rem;
+    color: #d90429;
+    margin-bottom: 1.2rem;
+    text-align: center;
   }
   
-  .message {
-    margin-top: 15px;
-    font-weight: 500;
+  .eligibility-status p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .eligibility-status strong {
+    color: #111;
+  }
+  
+  .eligibility-status .error {
+    color: #b00020;
+    background: #ffe6e6;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid #d90429;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+  }
+  
+  .edit-link {
+    display: inline-block;
+    margin-top: 1rem;
+    background-color: #d90429;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .edit-link:hover {
+    background-color: #a80320;
+  }
+  
+  ul {
+    margin-top: 0.5rem;
+    list-style-type: disc;
+    color: #555;
+  }
+  
+  ul li {
+    margin: 0.4rem 0;
   }
   

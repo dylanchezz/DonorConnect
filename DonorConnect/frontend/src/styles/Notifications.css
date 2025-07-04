@@ -1,0 +1,51 @@
+.notifications-page {
+    padding: 2rem;
+  }
+  
+  .notifications-page h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .notification-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .notification-list li {
+    background-color: #f1f1f1;
+    border-left: 5px solid #d90429;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    transition: background 0.3s;
+    position: relative;
+  }
+  
+  .notification-list li.unread {
+    background-color: #fff4f4;
+  }
+  
+  .notification-list li small {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+  }
+  
+  .notification-list li button {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .notification-list li button:hover {
+    background-color: #0056b3;
+  }
+  

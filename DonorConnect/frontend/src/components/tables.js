@@ -100,6 +100,19 @@ try {
   `);
   console.log("Blood_requests table created");
 
+  await con.query(`
+  CREATE TABLE IF NOT EXISTS notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    role ENUM('Patient', 'Donor') NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+  `);
+  console.log("Notifications table created");
+  
+
   //  Donor Responses table
   await con.query(`
     CREATE TABLE IF NOT EXISTS donor_responses (

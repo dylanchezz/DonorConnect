@@ -10,6 +10,9 @@ import responseRoutes from './routes/responses.js';
 import patientRoutes from './routes/patientRoutes.js';
 import requestRoutes from './routes/requests.js';
 import eligibilityRoutes from './routes/eligibility.js';
+import supportRoutes from './routes/supportRoutes.js';
+import notificationRoutes from './routes/notifications.js';
+import availabilityRoutes from './routes/availability.js';
 
 
 dotenv.config();
@@ -30,6 +33,9 @@ app.use('/api/requests', requestRoutes);  // Patient submits blood requests
 app.use('/api/responses', responseRoutes); // Donor responds to requests
 app.use('/api/patient', patientRoutes);
 app.use('/api/eligibility', eligibilityRoutes);
+app.use('/api/support', supportRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/availability', availabilityRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3001;
