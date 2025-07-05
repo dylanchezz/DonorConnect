@@ -17,9 +17,6 @@ import MyRequests from './pages/MyRequests';
 import Support from './pages/Support';
 import PatientNotifications from './pages/PatientNotifications';
 
-
-
-
 import DonorAvailability from './pages/DonorAvailability';
 import DonorHistory from './pages/DonorHistory';
 import DonorDashboard from './pages/DonorDashboard';
