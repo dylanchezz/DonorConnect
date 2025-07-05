@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaCheckCircle, FaHistory, FaUser, FaSignOutAlt, FaBell, FaLifeRing } from 'react-icons/fa';
+import { FaHome, FaCheckCircle, FaHistory, FaUser, FaSignOutAlt, FaBell, FaLifeRing, FaCalendarCheck } from 'react-icons/fa';
 import '../styles/DonorSidebar.css';
 
 const DonorSidebar = () => {
@@ -21,6 +21,10 @@ const DonorSidebar = () => {
         <NavLink to="availability" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaCheckCircle /> Availability
         </NavLink>
+        <NavLink to="appointments" className={({ isActive }) => isActive ? 'active' : ''}>
+  <FaCalendarCheck /> Appointments
+</NavLink>
+
         <NavLink to="history" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaHistory /> History
         </NavLink>

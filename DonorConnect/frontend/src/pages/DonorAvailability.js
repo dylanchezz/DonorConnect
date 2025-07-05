@@ -3,7 +3,6 @@ import axios from '../api/axios';
 
 const DonorAvailability = () => {
   const [formData, setFormData] = useState({
-    donor_id: '',
     available_date: '',
     available_time: '',
     blood_group: '',
@@ -22,23 +21,24 @@ const DonorAvailability = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/availability/submit', formData);
-      setStatusMessage(res.data.message);  // ✅ Show backend message
+      const token = localStorage.getItem('token'); // ✅ Get token
+      const res = await axios.post('/availability/submit', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`  // ✅ Send token in headers
+        }
+      });
+      setStatusMessage(res.data.message);
     } catch (error) {
       console.error('Submit error:', error);
       setStatusMessage('❌ Failed to submit availability.');
     }
   };
+  
 
   return (
     <div className="page-content">
       <h2>Submit Availability</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Donor ID:
-          <input type="text" name="donor_id" value={formData.donor_id} onChange={handleChange} required />
-        </label>
-        <br />
         <label>
           Date:
           <input type="date" name="available_date" value={formData.available_date} onChange={handleChange} required />
