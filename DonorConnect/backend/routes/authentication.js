@@ -25,11 +25,19 @@ const generateToken = (user, role) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '20d' });
 };
 
-// ✅ REGISTER endpoint
+// REGISTER endpoint
 router.post('/register', async (req, res) => {
   const { name, email, phone, password, role } = req.body;
   const config = roleConfig[role];
   if (!config) return res.status(400).json({ error: 'Invalid role specified.' });
+
+  // Restrict admin registration to specific emails
+  if (role === 'Admin') {
+    const allowedAdmins = ['admin1@gmail.com', 'admin2@gmail.com'];
+    if (!allowedAdmins.includes(email)) {
+      return res.status(403).json({ error: 'Only approved admin emails can register as Admin.' });
+    }
+  }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -41,7 +49,9 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ✅ LOGIN endpoint
+
+
+// LOGIN endpoint
 router.post('/login', async (req, res) => {
   const { email, password, role } = req.body;
   const config = roleConfig[role];

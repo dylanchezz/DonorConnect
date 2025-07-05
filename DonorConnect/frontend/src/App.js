@@ -23,6 +23,11 @@ import DonorDashboard from './pages/DonorDashboard';
 import WelcomeDonor from './pages/WelcomeDonor';
 import DonorSupport from './pages/DonorSupport';
 
+import AdminDashboard from './pages/AdminDashboard'; 
+import AllUsersPage from './pages/AllUsersPage';
+import AllRequestsPage from './pages/AllRequestsPage';
+
+
 const libraries = ['places']; // ✅ Define this outside the component
 
 function App() {
@@ -63,6 +68,13 @@ function App() {
               <Route path="support" element={<DonorSupport />} />
               
             </Route>
+            {/* Admin Dashboard Routes */}
+          <Route path="/admin-dashboard" element={<AdminDashboard />}>
+          <Route index element={<AllUsersPage />} />
+          <Route path="users" element={<AllUsersPage />} />
+        <Route path="requests" element={<AllRequestsPage />} />
+        </Route>
+
           </Routes>
         </div>
       </Router>
