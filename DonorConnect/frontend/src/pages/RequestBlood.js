@@ -71,17 +71,17 @@ const RequestBlood = () => {
         setMessage("❌ You're not eligible to submit a request.");
         return;
       }
-
+      
       setSubmitting(true);
       setMessage('');
 
-      // Uncomment if using real submission
-      // await axios.post('/requests/request', form, {
-      //   headers: { Authorization: `Bearer ${token}` }
-      // });
-
-      setForm({ bloodType: '', units: '', urgency: 'Normal', location: '', reason: '' });
+      
+       await axios.post('/requests/request', form, {
+       headers: { Authorization: `Bearer ${token}` }
+      });
       setMessage('✅ Blood request submitted successfully.');
+      setForm({ bloodType: '', units: '', urgency: 'Normal', location: '', reason: '' });
+      
     } catch (err) {
       console.error('Submission error:', err.response?.data || err.message);
       setMessage(`❌ Failed: ${err.response?.data?.message || err.message}`);
@@ -179,16 +179,16 @@ const RequestBlood = () => {
           </motion.button>
 
           {message && (
-            <motion.p
-              className={`message ${message.startsWith('✅') ? 'success' : 'error'}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              style={{ marginTop: '1rem', fontWeight: 'bold' }}
-            >
-              {message}
-            </motion.p>
-          )}
+  <div
+    className={`message ${
+      message.startsWith('✅') ? 'success' : 'error'
+    }`}
+  >
+    {message}
+  </div>
+)}
+
+
         </form>
       </motion.div>
     </>

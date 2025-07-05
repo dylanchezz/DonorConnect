@@ -24,9 +24,10 @@ const DonorSidebar = () => {
         <NavLink to="history" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaHistory /> History
         </NavLink>
-        <NavLink to="notifications" className={({ isActive }) => isActive ? 'active' : ''}>
-                  <FaBell /> Notifications
-                </NavLink>
+        <NavLink to="responses" className={({ isActive }) => isActive ? 'active' : ''}>
+  <FaBell /> Patient Responses
+</NavLink>
+
            <NavLink to="support" className={({ isActive }) => isActive ? 'active' : ''}>
                     <FaLifeRing /> Support
                   </NavLink>    

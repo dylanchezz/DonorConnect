@@ -40,6 +40,25 @@ router.post('/respond', authenticateToken, async (req, res) => {
   }
 });
 
+// Donor route to fetch notification responses
+router.get('/donor', authenticateToken, async (req, res) => {
+  try {
+    const donorId = req.user.donor_id;
+
+    const [rows] = await db.query(
+      `SELECT id, message, status, created_at
+       FROM notifications
+       WHERE donor_id = ? AND status IN ('accepted', 'rejected')
+       ORDER BY created_at DESC`,
+      [donorId]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Failed to fetch donor responses:', err);
+    res.status(500).json({ error: 'Failed to fetch donor responses.' });
+  }
+});
 
 
 

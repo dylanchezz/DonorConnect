@@ -22,6 +22,13 @@ import DonorHistory from './pages/DonorHistory';
 import DonorDashboard from './pages/DonorDashboard';
 import WelcomeDonor from './pages/WelcomeDonor';
 import DonorSupport from './pages/DonorSupport';
+import DonorResponses from './pages/DonorResponses';
+
+import AdminDashboard from './pages/AdminDashboard';
+import AdminWelcome from './pages/AdminWelcome'; 
+import ManageUsers from './pages/ManageUsers';  
+import Stats from './pages/Stats';
+import ManageRequests from './pages/ManageRequests';
 
 const libraries = ['places']; // ✅ Define this outside the component
 
@@ -45,13 +52,7 @@ function App() {
               <Route path="support" element={<Support />} />
               <Route path="requests" element={<MyRequests />} />
               <Route path="notifications" element={<PatientNotifications />} />
-
-
-
-
-
               
-
             </Route>
 
             {/* Donor Dashboard Routes */}
@@ -61,8 +62,16 @@ function App() {
               <Route path="history" element={<DonorHistory />} />
               <Route path="profile" element={<Profile />} />
               <Route path="support" element={<DonorSupport />} />
+              <Route path="responses" element={<DonorResponses />} />
               
             </Route>
+
+            <Route path="/admin-dashboard" element={<AdminDashboard />}>
+  <Route index element={<AdminWelcome />} />
+  <Route path="manage-users" element={<ManageUsers />} />
+  <Route path="stats" element={<Stats />} />
+  <Route path="manage-requests" element={<ManageRequests />} />
+</Route>
           </Routes>
         </div>
       </Router>

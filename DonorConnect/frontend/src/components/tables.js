@@ -88,9 +88,9 @@ try {
     CREATE TABLE IF NOT EXISTS blood_requests (
       request_id INT AUTO_INCREMENT PRIMARY KEY,
       patient_id INT NOT NULL,
-      blood_type_needed VARCHAR(5) NOT NULL,
-      units_needed INT NOT NULL,
-      urgency_level VARCHAR(20),
+      blood_type VARCHAR(5) NOT NULL,
+      units INT NOT NULL,
+      urgency VARCHAR(20),
       status ENUM('Pending', 'Matched', 'Fulfilled', 'Cancelled') DEFAULT 'Pending',
       reason TEXT,
       location VARCHAR(100),

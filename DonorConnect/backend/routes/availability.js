@@ -19,8 +19,8 @@ router.post('/submit', async (req, res) => {
   
       // 2. Find matching patients who requested this blood group and location
       const [patients] = await db.query(
-        'SELECT DISTINCT patient_id FROM requests WHERE blood_type = ? AND location = ? AND status = "pending"',
-        [blood_type, location]
+        'SELECT DISTINCT patient_id FROM blood_requests WHERE blood_type = ? AND location = ? AND status = "pending"',
+        [blood_group, location]
       );
   
       // 3. Insert notifications for each matching patient

@@ -5,9 +5,11 @@ import { authenticateToken } from '../middleware/auth.js';
 const router = express.Router();
 
 // POST /api/requests
-router.post('/request', (req, res) => {
+router.post('/request', authenticateToken, (req, res) => {
   const { bloodType, units, urgency, status, location, reason, created_at } = req.body;
-  const patient_id = req.user?.id || 1; 
+  const patient_id = req.user?.patient_id || 1;
+
+
 
   const query = `
     INSERT INTO blood_requests (patient_id, blood_type, units, urgency, status, location, reason, created_at)
@@ -31,10 +33,11 @@ router.post('/request', (req, res) => {
 // Get patient's requests
 // GET /api/requests/my-requests
 router.get('/my-requests', authenticateToken, async (req, res) => {
-  const patientId = req.user.id || req.user.patient_id;
+  const patientId = req.user.patient_id;
+
 
   try {
-    const [rows] = await db.query('SELECT * FROM requests WHERE patient_id = ?', [patientId]);
+    const [rows] = await db.query('SELECT * FROM blood_requests WHERE patient_id = ?', [patientId]);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch requests' });
@@ -47,11 +50,12 @@ router.get('/my-requests', authenticateToken, async (req, res) => {
 router.put('/update/:id', authenticateToken, async (req, res) => {
   const { bloodType, units, urgency, location, reason } = req.body;
   const { id } = req.params;
-  const patientId = req.user.id || req.user.patient_id;
+  const patientId = req.user.patient_id;
+
 
   try {
     await db.query(
-      'UPDATE requests SET bloodType = ?, units = ?, urgency = ?, location = ?, reason = ? WHERE id = ? AND patient_id = ?',
+      'UPDATE blood_requests SET blood_type = ?, units = ?, urgency = ?, location = ?, reason = ? WHERE id = ? AND patient_id = ?',
       [bloodType, units, urgency, location, reason, id, patientId]
     );
     res.json({ message: 'Request updated successfully' });
@@ -65,10 +69,10 @@ router.put('/update/:id', authenticateToken, async (req, res) => {
 // DELETE /api/requests/delete/:id
 router.delete('/delete/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
-  const patientId = req.user.id || req.user.patient_id;
+  const patientId = req.user.patient_id;
 
   try {
-    await db.query('DELETE FROM requests WHERE id = ? AND patient_id = ?', [id, patientId]);
+    await db.query('DELETE FROM blood_requests WHERE id = ? AND patient_id = ?', [id, patientId]);
     res.json({ message: 'Request cancelled successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete request' });

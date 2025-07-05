@@ -4,49 +4,33 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
-/**
- * GET /api/patient/profile
- * Get current patient's profile
- */
-router.get('/profile', authenticateToken, async (req, res) => {
-  const patientId = req.user.id;
+// GET /patient/profile
+router.get('/profile', authenticateToken, (req, res) => {
+  const userId = req.user.patient_id;
 
-  try {
-    const [rows] = await db.query(
-      'SELECT name, email, phone FROM patients WHERE patient_id = ?',
-      [patientId]
-    );
+  const query = 'SELECT name, email, phone FROM patients WHERE patient_id = ?';
+  db.query(query, [userId], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Database error' });
+    if (results.length === 0) return res.status(404).json({ message: 'Profile not found' });
 
-    if (!rows || rows.length === 0) {
-      return res.status(404).json({ error: 'Patient not found' });
-    }
-
-    res.json(rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to load profile' });
-  }
+    res.json(results[0]);
+  });
 });
 
-/**
- * PUT /api/patient/profile
- * Update current patient's profile
- */
-router.put('/profile', authenticateToken, async (req, res) => {
-  const patientId = req.user.id;
+// PUT /patient/profile
+router.put('/profile', authenticateToken, (req, res) => {
+  const userId = req.user.patient_id;
   const { name, email, phone } = req.body;
 
-  try {
-    await db.query(
-      'UPDATE patients SET name = ?, email = ?, phone = ? WHERE patient_id = ?',
-      [name, email, phone, patient_id]
-    );
+  const query = 'UPDATE patients SET name = ?, email = ?, phone = ? WHERE patient_id = ?';
+  db.query(query, [name, email, phone, userId], (err) => {
+    if (err) {
+      console.error('Profile update error:', err);
+      return res.status(500).json({ message: 'Failed to update profile' });
+    }
 
     res.json({ message: 'Profile updated successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to update profile' });
-  }
+  });
 });
 
 export default router;
