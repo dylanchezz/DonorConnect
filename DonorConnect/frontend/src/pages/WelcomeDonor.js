@@ -12,7 +12,6 @@ const WelcomeDonor = () => {
         </p>
 
         <div className="quick-links">
-          <Link to="availability">Availability</Link>
           <Link to="eligibility">Eligibility</Link>
           <Link to="profile">Your Profile</Link>
         </div>

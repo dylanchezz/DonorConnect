@@ -16,14 +16,20 @@ const roleConfig = {
 // Generate a JWT with the correct ID field based on user role
 const generateToken = (user, role) => {
   const { idField } = roleConfig[role];
+
+  // Explicit mapping for token
   const payload = {
     email: user.email,
-    role,
-    [idField]: user[idField] || user.id // fallback for generic DB alias
+    role
   };
+
+  // Inject correct role-based ID
+  payload[idField] = user[idField] || user.id;
 
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '20d' });
 };
+
+
 
 // REGISTER endpoint
 router.post('/register', async (req, res) => {

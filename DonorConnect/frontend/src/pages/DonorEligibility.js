@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from '../api/axios';
 import '../styles/Eligibility.css';
 
@@ -10,9 +11,11 @@ const DonorEligibility = () => {
     pregnant: ''
   });
 
-  const [isEligible, setIsEligible] = useState(true);
+  const [isEligible, setIsEligible] = useState(false);
   const [message, setMessage] = useState('');
+  const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
 
+  // Update eligibility whenever form changes
   useEffect(() => {
     const eligible =
       form.age === '18-65' &&
@@ -46,12 +49,15 @@ const DonorEligibility = () => {
 
       if (isEligible) {
         setMessage('✅ You are eligible to donate blood.');
+        setSubmittedSuccessfully(true);
       } else {
         setMessage('❌ You are not eligible to donate blood.');
+        setSubmittedSuccessfully(false);
       }
     } catch (err) {
       console.error('Submission error:', err);
       setMessage('❌ Failed to submit eligibility.');
+      setSubmittedSuccessfully(false);
     }
   };
 
@@ -93,12 +99,36 @@ const DonorEligibility = () => {
           </select>
         </label>
 
-        <button type="submit" disabled={!isEligible}>
-          {isEligible ? 'Submit Eligibility' : 'Not Eligible'}
-        </button>
+        <button
+  type="submit"
+  disabled={
+    !form.age ||
+    !form.weight ||
+    !form.recentIllness ||
+    !form.pregnant ||
+    !isEligible
+  }
+>
+  Submit Eligibility
+</button>
+
+{/* ❌ Show warning if form is filled but donor is not eligible */}
+{form.age && form.weight && form.recentIllness && form.pregnant && !isEligible && (
+  <p style={{ color: 'red', marginTop: '0.5rem' }}>
+    ⚠️ You do not meet the requirements to donate blood.
+  </p>
+)}
+
+
       </form>
 
       {message && <p className="status-message">{message}</p>}
+
+      {submittedSuccessfully && (
+        <p style={{ marginTop: '1rem' }}>
+          <Link to="/donor-dashboard/availability">➡️ Proceed to Submit Availability</Link>
+        </p>
+      )}
     </div>
   );
 };
