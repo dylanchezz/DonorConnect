@@ -66,6 +66,14 @@ css
   border-radius: 5px;
 }
 
+.dashboard-content {
+  margin-left: 100px; /* Match the sidebar width */
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+
 .eligibility-checklist label {
   display: block;
   margin-bottom: 10px;

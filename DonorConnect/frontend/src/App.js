@@ -1,7 +1,7 @@
 // All imports first
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoadScript } from '@react-google-maps/api'; // ✅ Map loader
+import { LoadScript } from '@react-google-maps/api';
 
 // Pages
 import SignupForm from './pages/SignUp_Form';
@@ -29,18 +29,19 @@ import AdminDashboard from './pages/AdminDashboard';
 import AllUsersPage from './pages/AllUsersPage';
 import AllRequestsPage from './pages/AllRequestsPage';
 
-
-const libraries = ['places']; // ✅ Define this outside the component
+const libraries = ['places'];
 
 function App() {
   return (
     <LoadScript googleMapsApiKey="AIzaSyBkWEHcVFLbR428h5CwvWxJU8G2xIYIcqM" libraries={libraries}>
       <Router>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
 
+          {/* Patient Dashboard */}
           <Route path="/patient-dashboard" element={<PatientDashboard />}>
             <Route index element={<WelcomePatient />} />
             <Route path="request" element={<RequestBlood />} />
@@ -51,6 +52,7 @@ function App() {
             <Route path="notifications" element={<PatientNotifications />} />
           </Route>
 
+          {/* Donor Dashboard */}
           <Route path="/donor-dashboard" element={<DonorDashboard />}>
             <Route index element={<WelcomeDonor />} />
             <Route path="availability" element={<DonorAvailability />} />
@@ -61,25 +63,13 @@ function App() {
             <Route path="appointments" element={<Appointments />} />
           </Route>
 
-
-            {/* Donor Dashboard Routes */}
-            <Route path="/donor-dashboard" element={<DonorDashboard />}>
-              <Route index element={<WelcomeDonor />} />
-              <Route path="availability" element={<DonorAvailability />} />
-              <Route path="history" element={<DonorHistory />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="support" element={<DonorSupport />} />
-              
-            </Route>
-            {/* Admin Dashboard Routes */}
+          {/* Admin Dashboard */}
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
-          <Route index element={<AllUsersPage />} />
-          <Route path="users" element={<AllUsersPage />} />
-        <Route path="requests" element={<AllRequestsPage />} />
-        </Route>
-
-          </Routes>
-        </div>
+            <Route index element={<AllUsersPage />} />
+            <Route path="users" element={<AllUsersPage />} />
+            <Route path="requests" element={<AllRequestsPage />} />
+          </Route>
+        </Routes>
       </Router>
     </LoadScript>
   );

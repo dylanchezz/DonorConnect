@@ -5,7 +5,7 @@ import '../styles/PatientDashboard.css';
 
 const PatientDashboard = () => {
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-content">
       <PatientSidebar />
       <main className="dashboard-main">
         <Outlet />

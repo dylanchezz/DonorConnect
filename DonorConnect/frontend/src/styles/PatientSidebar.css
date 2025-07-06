@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px;
+  width: 150px;
   height: 100vh;
   background-color: #d90429;
   color: #ce1c1c;
@@ -13,7 +13,7 @@
   z-index: 1000;
 }
 .sidebar {
-  width: 180px;
+  width: 150px;
   background-color: #e24040;
   border-right: 1px solid #131313;
   min-height: 100vh;
