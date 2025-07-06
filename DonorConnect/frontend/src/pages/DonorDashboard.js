@@ -17,7 +17,7 @@ const DonorDashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-content">
       <DonorSidebar />
       <main className="dashboard-main">
         <Outlet />
