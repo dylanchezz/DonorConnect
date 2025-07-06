@@ -41,3 +41,17 @@
   background-color: #1abc9c;
   color: white;
 }
+.logout-button {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  padding: 8px;
+  text-align: left;
+}
+.logout-button:hover {
+  text-decoration: underline;
+}
+
