@@ -11,7 +11,6 @@ import LandingPage from './pages/LandingPage';
 import PatientDashboard from './pages/PatientDashboard';
 import WelcomePatient from './pages/WelcomePatient';
 import RequestBlood from './pages/RequestBlood';
-import Eligibility from './pages/Eligibility';
 import Profile from './pages/Profile';
 import MyRequests from './pages/MyRequests';
 import Support from './pages/Support';
@@ -24,6 +23,7 @@ import WelcomeDonor from './pages/WelcomeDonor';
 import DonorSupport from './pages/DonorSupport';
 import DonorResponses from './pages/DonorResponses';
 import Appointments from './pages/Appointments';
+import DonorEligibility from './pages/DonorEligibility';
 
 import AdminDashboard from './pages/AdminDashboard'; 
 import AllUsersPage from './pages/AllUsersPage';
@@ -45,7 +45,6 @@ function App() {
           <Route path="/patient-dashboard" element={<PatientDashboard />}>
             <Route index element={<WelcomePatient />} />
             <Route path="request" element={<RequestBlood />} />
-            <Route path="eligibility" element={<Eligibility />} />
             <Route path="profile" element={<Profile />} />
             <Route path="requests" element={<MyRequests />} />
             <Route path="support" element={<Support />} />
@@ -55,12 +54,15 @@ function App() {
           {/* Donor Dashboard */}
           <Route path="/donor-dashboard" element={<DonorDashboard />}>
             <Route index element={<WelcomeDonor />} />
+            <Route path="eligibility" element={<DonorEligibility />} />
             <Route path="availability" element={<DonorAvailability />} />
             <Route path="history" element={<DonorHistory />} />
             <Route path="profile" element={<Profile />} />
             <Route path="support" element={<DonorSupport />} />
             <Route path="responses" element={<DonorResponses />} />
             <Route path="appointments" element={<Appointments />} />
+            
+
           </Route>
 
           {/* Admin Dashboard */}

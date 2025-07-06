@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/AdminSidebar.css';
-
+import { FaSignOutAlt } from 'react-icons/fa';
 const AdminSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,7 +29,9 @@ const AdminSidebar = () => {
           <Link to="/admin-dashboard/reports">📄 Download Reports</Link>
         </li>
         <li>
-  <button onClick={handleLogout} className="logout-button">🚪 Logout</button>
+ <button onClick={handleLogout}>
+           <FaSignOutAlt /> Logout
+         </button>
 </li>
 
       </ul>

@@ -18,6 +18,12 @@ const DonorSidebar = () => {
         <NavLink to="" end className={({ isActive }) => isActive ? 'active' : ''}>
           <FaHome /> Dashboard
         </NavLink>
+        <NavLink to="/donor-dashboard/eligibility" className={({ isActive }) => isActive ? 'active' : ''}>
+  <FaCheckCircle /> Eligibility
+</NavLink>
+
+  
+
         <NavLink to="availability" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaCheckCircle /> Availability
         </NavLink>

@@ -21,9 +21,6 @@ const PatientSidebar = () => {
         <NavLink to="request" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaPlus /> Request Blood
         </NavLink>
-        <NavLink to="eligibility" className={({ isActive }) => isActive ? 'active' : ''}>
-          <FaCheckCircle /> Eligibility
-        </NavLink>
         <NavLink to="requests" className={({ isActive }) => isActive ? 'active' : ''}>
           <FaCheckCircle /> My Requests
         </NavLink>

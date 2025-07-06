@@ -14,6 +14,8 @@ import supportRoutes from './routes/supportRoutes.js';
 import notificationRoutes from './routes/notifications.js';
 import availabilityRoutes from './routes/availability.js';
 import adminRoutes from './routes/admin.js';
+import donorsRoutes from './routes/donors.js';
+import appointmentsRoutes from './routes/appointments.js';
 
 
 dotenv.config();
@@ -38,6 +40,9 @@ app.use('/api/support', supportRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/availability', availabilityRoutes);
 app.use('/api/admin', adminRoutes); // Admin routes
+app.use('/api/donors', donorsRoutes);
+app.use('/api/appointments', appointmentsRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 3001;

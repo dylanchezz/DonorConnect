@@ -43,9 +43,9 @@ router.get('/requests', authenticateToken, async (req, res) => {
     const [results] = await db.query(`
       SELECT 
         r.request_id,
-        r.blood_type_needed AS blood_type,
-        r.units_needed AS units,
-        r.urgency_level AS urgency,
+        r.blood_type AS blood_type,
+        r.units AS units,
+        r.urgency AS urgency,
         r.reason,
         r.location,
         r.status,

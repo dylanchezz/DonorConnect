@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from '../api/axios';
 import GooglePlacesInput from '../components/GooglePlacesInput';
 import { GoogleMap, Marker } from '@react-google-maps/api';
+import { Link } from 'react-router-dom';
 
 const DonorAvailability = () => {
   const [formData, setFormData] = useState({
@@ -58,6 +59,11 @@ const DonorAvailability = () => {
   return (
     <div className="page-content">
       <h2>Submit Availability</h2>
+
+      <p>
+      <Link to="/donor-dashboard/eligibility">✅ Check Blood Donation Eligibility
+      </Link>
+    </p>
 
       {/* Map Preview */}
       <GoogleMap

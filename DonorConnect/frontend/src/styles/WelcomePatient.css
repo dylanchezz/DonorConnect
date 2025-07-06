@@ -82,3 +82,46 @@
     transform: translateY(0);
   }
 }
+
+.search-filter-section {
+  margin-top: 30px;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-controls input,
+.filter-controls select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+}
+
+.filter-controls button {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.donor-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.donor-card {
+  background-color: #f8f8f8;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

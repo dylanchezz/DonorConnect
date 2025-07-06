@@ -9,10 +9,11 @@ router.get('/', authenticateToken, async (req, res) => {
   if (!donorId) return res.status(403).json({ message: 'Not a donor account' });
 
   try {
-    const [results] = await db.query(
-      'SELECT * FROM appointments WHERE donor_id = ? ORDER BY date, time',
-      [donorId]
-    );
+    cconst [rows] = await db.query(
+  'SELECT * FROM appointments WHERE donor_id = ? ORDER BY appointment_date, appointment_time',
+  [donor_id]
+);
+
     res.json(results);
   } catch (err) {
     console.error('DB Error:', err);
@@ -67,5 +68,23 @@ router.post('/create', authenticateToken, async (req, res) => {
     }
   });
   
+  router.post('/accept', async (req, res) => {
+  const { patient_id, donor_id } = req.body;
+
+  if (!patient_id || !donor_id) {
+    return res.status(400).json({ message: 'Missing patient_id or donor_id' });
+  }
+
+  try {
+    await db.query(
+      'INSERT INTO appointments (patient_id, donor_id, status) VALUES (?, ?, ?)',
+      [patient_id, donor_id, 'pending']
+    );
+    res.status(201).json({ message: 'Appointment created successfully' });
+  } catch (err) {
+    console.error('Error accepting donor:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 export default router;

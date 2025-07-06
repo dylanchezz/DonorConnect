@@ -42,16 +42,26 @@
   color: white;
 }
 .logout-button {
-  background: none;
-  border: none;
-  color: red;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 1rem;
-  padding: 8px;
-  text-align: left;
-}
-.logout-button:hover {
-  text-decoration: underline;
-}
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+    transition: background 0.3s ease;
+  }
+
+  .logout-button.active {
+    background-color: #1abc9c;
+    color: white;
+  }
+  
+  
+  .logout-button:hover {
+    background-color: #1b2836;
+  }
+  
 
