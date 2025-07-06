@@ -4,30 +4,68 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// GET: Donor's Appointments
 router.get('/', authenticateToken, async (req, res) => {
   const donorId = req.user.donor_id;
+  if (!donorId) return res.status(403).json({ message: 'Not a donor account' });
+
   try {
-    const [rows] = await db.query('SELECT * FROM appointments WHERE donor_id = ?', [donorId]);
-    res.json(rows);
+    const [results] = await db.query(
+      'SELECT * FROM appointments WHERE donor_id = ? ORDER BY date, time',
+      [donorId]
+    );
+    res.json(results);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch appointments' });
+    console.error('DB Error:', err);
+    res.status(500).json({ message: 'Error fetching appointments' });
   }
 });
 
-// POST: Create Appointment (used optionally by system/admin)
 router.post('/create', authenticateToken, async (req, res) => {
-  const donorId = req.user.donor_id;
-  const { date_time, location, patient_id } = req.body;
-  try {
-    await db.query(
-      'INSERT INTO appointments (donor_id, patient_id, date_time, location) VALUES (?, ?, ?, ?)',
-      [donorId, patient_id || null, date_time, location]
-    );
-    res.status(201).json({ message: 'Appointment scheduled successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to schedule appointment' });
-  }
-});
+    const donorId = req.user.donor_id;
+    const { appointment_date, appointment_time, location, patient_id } = req.body;
+  
+    if (!appointment_date || !appointment_time || !location) {
+      return res.status(400).json({ message: 'Missing value in the form!' });
+    }
+  
+    try {
+      // Insert appointment
+      const [result] = await db.query(
+        'INSERT INTO appointments (donor_id, appointment_date, appointment_time, location, status) VALUES (?, ?, ?, ?, ?)',
+        [donorId, appointment_date, appointment_time, location, 'Scheduled']
+      );
+  
+      // Send notification to the patient (optional)
+      if (patient_id) {
+        await db.query(
+          'INSERT INTO notifications (patient_id, message) VALUES (?, ?)',
+          [patient_id, `🩸 A donor has scheduled an appointment on ${appointment_date} at ${appointment_time}.`]
+        );
+      }
+  
+      res.json({ message: '✅ Appointment created successfully!' });
+    } catch (err) {
+      console.error('DB Error:', err);
+      res.status(500).json({ message: '❌ Failed to create appointment' });
+    }
+  });
+
+  router.put('/reschedule/:id', authenticateToken, async (req, res) => {
+    const donorId = req.user.donor_id;
+    const { id } = req.params;
+    const { appointment_date, appointment_time, location } = req.body;
+  
+    try {
+      await db.query(
+        'UPDATE appointments SET appointment_date = ?, appointment_time = ?, location = ?, status = ? WHERE id = ? AND donor_id = ?',
+        [appointment_date, appointment_time, location, 'Rescheduled', id, donorId]
+      );
+      res.json({ message: '✅ Appointment rescheduled successfully!' });
+    } catch (err) {
+      console.error('DB Error:', err);
+      res.status(500).json({ message: '❌ Failed to reschedule' });
+    }
+  });
+  
 
 export default router;

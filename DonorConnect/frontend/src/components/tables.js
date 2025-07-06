@@ -130,16 +130,16 @@ try {
   //Appointments
   await con.query(`
   CREATE TABLE appointments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    donor_id INT NOT NULL,
-    patient_id INT,
-    date_time DATETIME NOT NULL,
-    location VARCHAR(255) NOT NULL,
-    status ENUM('Scheduled', 'Completed', 'Cancelled') DEFAULT 'Scheduled',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (donor_id) REFERENCES donors(id),
-    FOREIGN KEY (patient_id) REFERENCES patients(id)
-  );
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  donor_id INT,
+  patient_id INT,
+  appointment_date DATE,
+  appointment_time TIME,
+  location VARCHAR(255),
+  status ENUM('Scheduled', 'Rescheduled', 'Cancelled') DEFAULT 'Scheduled',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
   `);
   console.log("Donor_responses table created");
 

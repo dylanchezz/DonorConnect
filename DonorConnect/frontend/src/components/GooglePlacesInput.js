@@ -1,25 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-<<<<<<< HEAD
-const GooglePlacesInput = ({ value, onPlaceSelected }) => {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (!window.google || !window.google.maps || !window.google.maps.places) {
-      console.error('Google Maps JavaScript API not loaded.');
-      return;
-    }
-
-    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
-      types: ['establishment'],
-      componentRestrictions: { country: 'KE' }
-    });
-
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-      const address = place?.formatted_address || place?.name || '';
-      onPlaceSelected(address);
-=======
 const loadGoogleMapsScript = (callback) => {
   const existingScript = document.getElementById('google-maps-script');
 
@@ -55,7 +35,6 @@ const GooglePlacesInput = ({ onPlaceSelected }) => {
         if (!place || !place.formatted_address) return;
         onPlaceSelected(place.formatted_address);
       });
->>>>>>> 1acb2ba4904282f0985557fa0c94710981613e89
     });
   }, [onPlaceSelected]);
 
@@ -63,22 +42,13 @@ const GooglePlacesInput = ({ onPlaceSelected }) => {
     <input
       ref={inputRef}
       type="text"
-<<<<<<< HEAD
-      placeholder="Search hospitals in Kenya"
-      defaultValue={value}
-=======
       placeholder="Enter a location"
->>>>>>> 1acb2ba4904282f0985557fa0c94710981613e89
       style={{
         width: '100%',
         height: '40px',
         padding: '8px',
         fontSize: '16px',
-<<<<<<< HEAD
-        marginBottom: '1rem'
-=======
         marginBottom: '1rem',
->>>>>>> 1acb2ba4904282f0985557fa0c94710981613e89
       }}
     />
   );

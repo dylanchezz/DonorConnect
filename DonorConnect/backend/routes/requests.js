@@ -72,7 +72,7 @@ router.delete('/delete/:id', authenticateToken, async (req, res) => {
   const patientId = req.user.patient_id;
 
   try {
-    await db.query('DELETE FROM blood_requests WHERE id = ? AND patient_id = ?', [id, patientId]);
+    await db.query('DELETE FROM blood_requests WHERE request_id = ? AND patient_id = ?', [id, patientId]);
     res.json({ message: 'Request cancelled successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete request' });

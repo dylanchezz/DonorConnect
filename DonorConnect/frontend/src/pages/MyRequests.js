@@ -70,8 +70,8 @@ const MyRequests = () => {
         <p>No requests found.</p>
       ) : (
         requests.map((req) => (
-          <div key={req.id} className="request-card">
-            {editingId === req.id ? (
+          <div key={req.request_id} className="request-card">
+            {editingId === req.request_id ? (
               <>
                 <input name="bloodType" value={formData.bloodType} onChange={handleChange} />
                 <input name="units" value={formData.units} onChange={handleChange} />
@@ -90,7 +90,7 @@ const MyRequests = () => {
                 <p><strong>Reason:</strong> {req.reason}</p>
                 <p><strong>Status:</strong> {req.status}</p>
                 <button onClick={() => handleEdit(req)}>Edit</button>
-                <button onClick={() => handleCancel(req.id)}>Cancel</button>
+                <button onClick={() => handleCancel(req.request_id)}>Cancel</button>
               </>
             )}
           </div>
