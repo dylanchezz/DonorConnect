@@ -1,11 +1,19 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/AdminSidebar.css';
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
 
   const isActive = (path) => location.pathname.includes(path);
+  const handleLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  navigate('/login');
+};
+
 
   return (
     <div className="sidebar">
@@ -20,6 +28,10 @@ const AdminSidebar = () => {
         <li className={isActive('/admin-dashboard/reports') ? 'active' : ''}>
           <Link to="/admin-dashboard/reports">📄 Download Reports</Link>
         </li>
+        <li>
+  <button onClick={handleLogout} className="logout-button">🚪 Logout</button>
+</li>
+
       </ul>
     </div>
   );
