@@ -28,7 +28,7 @@ const WelcomePatient = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('/api/donors/search', {
+      const response = await axios.get('/donors/search', {
         params: { name: searchName, blood_group: bloodGroup, location },
       });
       setDonors(response.data);
