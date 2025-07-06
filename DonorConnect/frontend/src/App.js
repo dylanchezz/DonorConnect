@@ -11,7 +11,7 @@ import LandingPage from './pages/LandingPage';
 import PatientDashboard from './pages/PatientDashboard';
 import WelcomePatient from './pages/WelcomePatient';
 import RequestBlood from './pages/RequestBlood';
-import Eligibility from './pages/Eligibility';
+import Eligibility from './pages/eligibility';
 import Profile from './pages/Profile';
 import MyRequests from './pages/MyRequests';
 import Support from './pages/Support';
