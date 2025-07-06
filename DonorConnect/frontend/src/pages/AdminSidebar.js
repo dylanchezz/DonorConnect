@@ -25,9 +25,6 @@ const AdminSidebar = () => {
         <li className={isActive('/admin-dashboard/requests') ? 'active' : ''}>
           <Link to="/admin-dashboard/requests">🩸 Blood Requests</Link>
         </li>
-        <li className={isActive('/admin-dashboard/reports') ? 'active' : ''}>
-          <Link to="/admin-dashboard/reports">📄 Download Reports</Link>
-        </li>
         <li>
   <button onClick={handleLogout} className="logout-button">🚪 Logout</button>
 </li>
