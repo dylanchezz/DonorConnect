@@ -10,21 +10,12 @@ const WelcomePatient = () => {
   const [bloodGroup, setBloodGroup] = useState('');
   const [location, setLocation] = useState('');
   const [donors, setDonors] = useState([]);
+  const [selectedDonor, setSelectedDonor] = useState(null);
+  const [appointmentDate, setAppointmentDate] = useState('');
+  const [appointmentTime, setAppointmentTime] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
-  // ✅ Moved outside JSX
-  const handleAccept = async (donor_id) => {
-    try {
-      const patient_id = 1; // Replace with actual logged-in patient ID
-     await axios.post('/appointments/accept', {
-        patient_id,
-        donor_id,
-      });
-      alert('Donor accepted! Appointment created.');
-    } catch (err) {
-      console.error('Error accepting donor:', err);
-      alert('Error creating appointment');
-    }
-  };
+  const patient_id = 1; // TODO: Replace with actual logged-in patient ID
 
   const handleSearch = async () => {
     try {
@@ -34,6 +25,42 @@ const WelcomePatient = () => {
       setDonors(response.data);
     } catch (err) {
       console.error('Error fetching donors:', err);
+    }
+  };
+
+  const handleAcceptClick = (donor) => {
+    setSelectedDonor(donor);
+    setAppointmentDate('');
+    setAppointmentTime('');
+    setShowModal(true);
+  };
+
+  const handleConfirmAppointment = async () => {
+    if (!appointmentDate || !appointmentTime) {
+      alert('Please fill in both date and time.');
+      return;
+    }
+
+    const locationText = typeof location === 'string'
+      ? location
+      : location?.description || 'Unknown';
+
+    const payload = {
+      patient_id,
+      donor_id: selectedDonor.donor_id || selectedDonor.id,
+      appointment_date: appointmentDate,
+      appointment_time: appointmentTime,
+      location: locationText
+    };
+
+    try {
+      await axios.post('/appointments/accept', payload);
+      alert('✅ Appointment created!');
+      setShowModal(false);
+      setSelectedDonor(null);
+    } catch (err) {
+      console.error('❌ Error accepting donor:', err);
+      alert('Error creating appointment');
     }
   };
 
@@ -57,7 +84,7 @@ const WelcomePatient = () => {
         />
       </div>
 
-      {/* 🔍 Search and Filter Section */}
+      {/* 🔍 Donor Search Section */}
       <div className="search-filter-section">
         <h3>Search for Donors</h3>
         <div className="filter-controls">
@@ -87,26 +114,47 @@ const WelcomePatient = () => {
 
         <GooglePlacesInput onPlaceSelected={(selected) => setLocation(selected)} />
 
-
-
         <div className="donor-results">
           {donors.length === 0 ? (
             <p>No donors found. Try a different search.</p>
           ) : (
             donors.map((donor) => (
-              
               <div key={donor.donor_id || donor.id} className="donor-card">
                 <h4>{donor.name}</h4>
                 <p>Blood Group: {donor.blood_group}</p>
                 <p>Location: {donor.location}</p>
-                <button onClick={() => handleAccept(donor.donor_id || donor.id)}>
-                  Accept
-                </button>
+                <button onClick={() => handleAcceptClick(donor)}>Accept</button>
               </div>
             ))
           )}
         </div>
       </div>
+
+      {/* 🗓️ Modal for Appointment Info */}
+      {showModal && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h3>📅 Schedule Appointment</h3>
+            <label>Date:</label>
+            <input
+              type="date"
+              value={appointmentDate}
+              onChange={(e) => setAppointmentDate(e.target.value)}
+            />
+            <label>Time:</label>
+            <input
+              type="time"
+              value={appointmentTime}
+              onChange={(e) => setAppointmentTime(e.target.value)}
+            />
+            <p><strong>Location:</strong> {typeof location === 'string' ? location : location?.description || 'Not set'}</p>
+            <div className="modal-actions">
+              <button onClick={handleConfirmAppointment}>Confirm</button>
+              <button onClick={() => setShowModal(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

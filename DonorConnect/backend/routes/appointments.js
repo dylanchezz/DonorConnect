@@ -81,27 +81,29 @@ router.put('/reschedule/:id', authenticateToken, async (req, res) => {
  * POST /api/appointments/accept — Create appointment after patient accepts donor
  */
 router.post('/accept', async (req, res) => {
-  const { patient_id, donor_id } = req.body;
+  const { patient_id, donor_id, appointment_date, appointment_time, location } = req.body;
 
-  if (!patient_id || !donor_id) {
-    return res.status(400).json({ message: 'Missing patient_id or donor_id' });
+  if (!patient_id || !donor_id || !appointment_date || !appointment_time || !location) {
+    return res.status(400).json({ message: 'Missing required appointment details' });
   }
 
   try {
     await db.query(
-      'INSERT INTO appointments (patient_id, donor_id, status) VALUES (?, ?, ?)',
-      [patient_id, donor_id, 'pending']
+      'INSERT INTO appointments (patient_id, donor_id, appointment_date, appointment_time, location, status) VALUES (?, ?, ?, ?, ?, ?)',
+      [patient_id, donor_id, appointment_date, appointment_time, location, 'Pending']
     );
-    res.status(201).json({ message: 'Appointment created successfully' });
+    res.status(201).json({ message: '✅ Appointment accepted successfully!' });
   } catch (err) {
     console.error('Error accepting donor:', err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: '❌ Server error' });
   }
 });
+
 
 /**
  * DELETE /api/appointments/delete/:id — Cancel (delete) a donor's appointment
  */
+// DELETE /api/appointments/delete/:id — Cancel/Delete an appointment
 router.delete('/delete/:id', authenticateToken, async (req, res) => {
   const donorId = req.user.donor_id;
   const { id } = req.params;
@@ -113,15 +115,16 @@ router.delete('/delete/:id', authenticateToken, async (req, res) => {
     );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Appointment not found or not authorized to delete.' });
+      return res.status(404).json({ message: 'Appointment not found or not authorized.' });
     }
 
-    res.json({ message: '🗑️ Appointment cancelled successfully' });
+    res.json({ message: '🗑️ Appointment cancelled successfully.' });
   } catch (err) {
     console.error('DB Error:', err);
     res.status(500).json({ message: '❌ Failed to cancel appointment' });
   }
 });
+
 
 
 export default router;
