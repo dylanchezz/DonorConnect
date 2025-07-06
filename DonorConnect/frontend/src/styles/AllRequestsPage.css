@@ -1,0 +1,40 @@
+.requests-page {
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.requests-page h2 {
+  margin-bottom: 1.5rem;
+}
+
+.requests-page table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.requests-page th,
+.requests-page td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.requests-page th {
+  background-color: #f2f2f2;
+}
+.requests-page button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.requests-page button:hover {
+  background-color: #17a589;
+}
+

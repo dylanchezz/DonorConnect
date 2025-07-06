@@ -14,7 +14,10 @@ import supportRoutes from './routes/supportRoutes.js';
 import notificationRoutes from './routes/notifications.js';
 import availabilityRoutes from './routes/availability.js';
 import adminRoutes from './routes/admin.js';
+<<<<<<< HEAD
 import appointmentRoutes from './routes/appointments.js';
+=======
+>>>>>>> 3012517123fdf3fa72d1ddcbfc4fe6f2bdd42c63
 
 
 dotenv.config();
@@ -38,8 +41,12 @@ app.use('/api/eligibility', eligibilityRoutes);
 app.use('/api/support', supportRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/availability', availabilityRoutes);
+<<<<<<< HEAD
 app.use('/api/admin', adminRoutes);
 app.use('/api/appointments', appointmentRoutes);
+=======
+app.use('/api/admin', adminRoutes); // Admin routes
+>>>>>>> 3012517123fdf3fa72d1ddcbfc4fe6f2bdd42c63
 
 // Start server
 const PORT = process.env.PORT || 3001;

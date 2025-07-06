@@ -1,60 +1,62 @@
-// backend/routes/admin.js
 import express from 'express';
 import db from '../db.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticateToken } from '../middleware/auth.js'; 
 
 const router = express.Router();
 
-// GET ALL USERS
-router.get('/users', authenticateToken, async (req, res) => {
-    try {
-      const [patients] = await db.query('SELECT patient_id, name, email, "Patient" AS role FROM patients');
-      const [donors] = await db.query('SELECT donor_id, name, email, "Donor" AS role FROM donors');
-      const users = [...patients, ...donors];
-      res.json(users);
-    } catch (err) {
-      console.error('Error fetching users:', err);
-      res.status(500).json({ error: 'Failed to fetch users' });
-    }
-  });
-  
-  
-  // GET BLOOD REQUESTS
-  router.get('/requests', authenticateToken, async (req, res) => {
-    try {
-      const [requests] = await db.query('SELECT id, patient_id, blood_type, urgency, status FROM blood_requests');
-      res.json(requests);
-    } catch (err) {
-      console.error('Error fetching requests:', err);
-      res.status(500).json({ error: 'Failed to fetch blood requests' });
-    }
-  });
-  
-  
-
-router.delete('/users/:id', authenticateToken, async (req, res) => {
+// GET all patients
+router.get('/users/patients', authenticateToken, async (req, res) => {
   try {
-    await db.query('DELETE FROM users WHERE id = ?', [req.params.id]);
-    res.json({ message: 'User deleted' });
+    const [rows] = await db.query('SELECT name, email, phone FROM patients');
+    res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete user' });
+    res.status(500).json({ error: 'Failed to fetch patients.' });
   }
 });
 
-// backend/routes/admin.js
-router.get('/stats', authenticateToken, async (req, res) => {
-    try {
-      const [[{ count: patients }]] = await db.query('SELECT COUNT(*) AS count FROM patients');
-      const [[{ count: donors }]] = await db.query('SELECT COUNT(*) AS count FROM donors');
-      const [[{ count: requests }]] = await db.query('SELECT COUNT(*) AS count FROM blood_requests');
-      const [[{ count: pending_requests }]] = await db.query("SELECT COUNT(*) AS count FROM blood_requests WHERE status = 'pending'");
-  
-      res.json({ patients, donors, requests, pending_requests });
-    } catch (err) {
-      console.error('Error fetching stats:', err);
-      res.status(500).json({ error: 'Failed to get stats' });
-    }
-  });
-  
+// GET all donors
+router.get('/users/donors', authenticateToken, async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT name, email, phone FROM donors');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch donors.' });
+  }
+});
+
+// GET all admins
+router.get('/users/admins', authenticateToken, async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT name, email, phone FROM admins');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch admins.' });
+  }
+});
+// GET all blood requests
+router.get('/requests', authenticateToken, async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT 
+        r.request_id,
+        r.blood_type,
+        r.units,
+        r.urgency,
+        r.reason,
+        r.location,
+        r.status,
+        r.created_at,
+        p.name AS patient_name
+      FROM requests r
+      JOIN patients p ON r.patient_id = p.patient_id
+      ORDER BY r.created_at DESC
+    `);
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching requests:', err);
+    res.status(500).json({ error: 'Failed to fetch blood requests.' });
+  }
+});
 
 export default router;

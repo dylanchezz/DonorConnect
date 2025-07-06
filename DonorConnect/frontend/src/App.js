@@ -25,14 +25,12 @@ import DonorSupport from './pages/DonorSupport';
 import DonorResponses from './pages/DonorResponses';
 import Appointments from './pages/Appointments';
 
-import AdminDashboard from './pages/AdminDashboard';
-import AdminWelcome from './pages/AdminWelcome';
-import ManageUsers from './pages/ManageUsers';
-import Stats from './pages/Stats';
-import ManageRequests from './pages/ManageRequests';
+import AdminDashboard from './pages/AdminDashboard'; 
+import AllUsersPage from './pages/AllUsersPage';
+import AllRequestsPage from './pages/AllRequestsPage';
 
-// Only constants or variables allowed after imports
-const libraries = ['places'];
+
+const libraries = ['places']; // ✅ Define this outside the component
 
 function App() {
   return (
@@ -63,13 +61,25 @@ function App() {
             <Route path="appointments" element={<Appointments />} />
           </Route>
 
+
+            {/* Donor Dashboard Routes */}
+            <Route path="/donor-dashboard" element={<DonorDashboard />}>
+              <Route index element={<WelcomeDonor />} />
+              <Route path="availability" element={<DonorAvailability />} />
+              <Route path="history" element={<DonorHistory />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="support" element={<DonorSupport />} />
+              
+            </Route>
+            {/* Admin Dashboard Routes */}
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
-            <Route index element={<AdminWelcome />} />
-            <Route path="manage-users" element={<ManageUsers />} />
-            <Route path="stats" element={<Stats />} />
-            <Route path="manage-requests" element={<ManageRequests />} />
-          </Route>
-        </Routes>
+          <Route index element={<AllUsersPage />} />
+          <Route path="users" element={<AllUsersPage />} />
+        <Route path="requests" element={<AllRequestsPage />} />
+        </Route>
+
+          </Routes>
+        </div>
       </Router>
     </LoadScript>
   );
