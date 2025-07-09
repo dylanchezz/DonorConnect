@@ -1,5 +1,3 @@
-# DonorConnect
-
 # 🩸 DonorConnect - Web-Based Blood Donation Request System
 
 DonorConnect is a web-based platform that streamlines blood donation by connecting patients, donors, hospitals, and administrators through a centralized, real-time system. It allows patients in need of blood transfusions to easily request donations and enables donors to quickly locate and respond to requests based on blood type and location.
